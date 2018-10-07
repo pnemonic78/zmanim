@@ -1,6 +1,6 @@
 /*
  * Zmanim Java API
- * Copyright (C) 2011 - 2014 Eliyahu Hershfeld
+ * Copyright (C) 2011 - 2018 Eliyahu Hershfeld
  * Copyright (C) September 2002 Avrom Finkelstien
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
@@ -16,11 +16,11 @@
  */
 package net.sourceforge.zmanim.hebrewcalendar;
 
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import net.sourceforge.zmanim.util.GeoLocation;
 
 /**
  * The JewishCalendar extends the JewishDate class and adds calendar methods.
@@ -28,21 +28,19 @@ import net.sourceforge.zmanim.util.GeoLocation;
  * This open source Java code was originally ported by <a href="http://www.facebook.com/avromf">Avrom Finkelstien</a>
  * from his C++ code. It was refactored to fit the KosherJava Zmanim API with simplification of the code, enhancements
  * and some bug fixing.
+  The class allows setting whether the holiday scheme follows the Israel scheme or outside Israel* scheme. The default is the outside Israel scheme.
  *
- * The class allows setting whether the holiday scheme follows the Israel scheme or outside Israel scheme. The default is the outside Israel scheme.
- *
- * TODO: Some do not belong in this class, but here is a partial list of what should still be implemented in some form:
+ * @todo Some do not belong in this class, but here is a partial list of what should still be implemented in some form:
  * <ol>
  * <li>Add Isru Chag</li>
  * <li>Shabbos Mevarchim</li>
- * <li>Daf Yomi Yerushalmi, Mishna yomis etc)</li>
+ * <li>Mishna yomis etc</li>
  * </ol>
  *
  * @see java.util.Date
  * @see java.util.Calendar
  * @author &copy; Avrom Finkelstien 2002
- * @author &copy; Eliyahu Hershfeld 2011 - 2016
- * @version 1.0.0
+ * @author &copy; Eliyahu Hershfeld 2011 - 2018
  */
 public class JewishCalendar extends JewishDate {
 	public static final int EREV_PESACH = 0;
@@ -202,151 +200,124 @@ public class JewishCalendar extends JewishDate {
 
 		// check by month (starts from Nissan)
 		switch (getJewishMonth()) {
-			case NISSAN:
-				if (day == 14) {
-					return EREV_PESACH;
-				}
-				if (day == 15 || day == 21
-						|| (!inIsrael && (day == 16 || day == 22))) {
-					return PESACH;
-				}
-				if (day >= 17 && day <= 20
-						|| (day == 16 && inIsrael)) {
-					return CHOL_HAMOED_PESACH;
-				}
-				if (isUseModernHolidays()
-						&& ((day == 26 && dayOfWeek == 5)
-						|| (day == 28 && dayOfWeek == 2)
-						|| (day == 27 && dayOfWeek != 1 && dayOfWeek != 6))) {
-					return YOM_HASHOAH;
-				}
-				break;
-			case IYAR:
-				if (isUseModernHolidays()
-						&& ((day == 4 && dayOfWeek == 3)
-						|| ((day == 3 || day == 2) && dayOfWeek == 4) || (day == 5 && dayOfWeek == 2))) {
-					return YOM_HAZIKARON;
-				}
-				// if 5 Iyar falls on Wed Yom Haatzmaut is that day. If it fal1s on Friday or Shabbos it is moved back to
-				// Thursday. If it falls on Monday it is moved to Tuesday
-				if (isUseModernHolidays()
-						&& ((day == 5 && dayOfWeek == 4)
-						|| ((day == 4 || day == 3) && dayOfWeek == 5) || (day == 6 && dayOfWeek == 3))) {
-					return YOM_HAATZMAUT;
-				}
-				if (day == 14) {
-					return PESACH_SHENI;
-				}
-				if (isUseModernHolidays() && day == 28) {
-					return YOM_YERUSHALAYIM;
-				}
-				break;
-			case SIVAN:
-				if (day == 5) {
-					return EREV_SHAVUOS;
-				}
-				if (day == 6 || (day == 7 && !inIsrael)) {
-					return SHAVUOS;
-				}
-				break;
-			case TAMMUZ:
-				// push off the fast day if it falls on Shabbos
-				if ((day == 17 && dayOfWeek != 7)
-						|| (day == 18 && dayOfWeek == 1)) {
-					return SEVENTEEN_OF_TAMMUZ;
-				}
-				break;
-			case AV:
-				// if Tisha B'av falls on Shabbos, push off until Sunday
-				if ((dayOfWeek == 1 && day == 10)
-						|| (dayOfWeek != 7 && day == 9)) {
-					return TISHA_BEAV;
-				}
-				if (day == 15) {
-					return TU_BEAV;
-				}
-				break;
-			case ELUL:
-				if (day == 29) {
-					return EREV_ROSH_HASHANA;
-				}
-				break;
-			case TISHREI:
-				if (day == 1 || day == 2) {
-					return ROSH_HASHANA;
-				}
-				if ((day == 3 && dayOfWeek != 7)
-						|| (day == 4 && dayOfWeek == 1)) {
-					// push off Tzom Gedalia if it falls on Shabbos
-					return FAST_OF_GEDALYAH;
-				}
-				if (day == 9) {
-					return EREV_YOM_KIPPUR;
-				}
-				if (day == 10) {
-					return YOM_KIPPUR;
-				}
-				if (day == 14) {
-					return EREV_SUCCOS;
-				}
-				if (day == 15 || (day == 16 && !inIsrael)) {
-					return SUCCOS;
-				}
-				if (day >= 17 && day <= 20 || (day == 16 && inIsrael)) {
-					return CHOL_HAMOED_SUCCOS;
-				}
-				if (day == 21) {
-					return HOSHANA_RABBA;
-				}
-				if (day == 22) {
-					return SHEMINI_ATZERES;
-				}
-				if (day == 23 && !inIsrael) {
-					return SIMCHAS_TORAH;
-				}
-				break;
-			case KISLEV: // no yomtov in CHESHVAN
-				// if (day == 24) {
-				// return EREV_CHANUKAH;
-				// } else
-				if (day >= 25) {
-					return CHANUKAH;
-				}
-				break;
-			case TEVES:
-				if (day == 1 || day == 2
-						|| (day == 3 && isKislevShort())) {
-					return CHANUKAH;
-				}
-				if (day == 10) {
-					return TENTH_OF_TEVES;
-				}
-				break;
-			case SHEVAT:
-				if (day == 15) {
-					return TU_BESHVAT;
-				}
-				break;
-			case ADAR:
-				if (!isJewishLeapYear()) {
-					// if 13th Adar falls on Friday or Shabbos, push back to Thursday
-					if (((day == 11 || day == 12) && dayOfWeek == 5)
-							|| (day == 13 && !(dayOfWeek == 6 || dayOfWeek == 7))) {
-						return FAST_OF_ESTHER;
-					}
-					if (day == 14) {
-						return PURIM;
-					}
-					if (day == 15) {
-						return SHUSHAN_PURIM;
-					}
-				} else { // else if a leap year
-					if (day == 14) {
-						return PURIM_KATAN;
-					}
-				}
-				break;
-			case ADAR_II:
+		case NISSAN:
+			if (day == 14) {
+				return EREV_PESACH;
+			}  if (day == 15 || day == 21
+					|| (!inIsrael && (day == 16 || day == 22))) {
+				return PESACH;
+			}  if (day >= 17 && day <= 20
+					|| (day == 16 && inIsrael)) {
+				return CHOL_HAMOED_PESACH;
+			}
+			if (isUseModernHolidays()
+					&& ((day == 26 && dayOfWeek == 5)
+							|| (day == 28 && dayOfWeek == 2)
+							|| (day == 27 && dayOfWeek != 1 && dayOfWeek != 6))) {
+				return YOM_HASHOAH;
+			}
+			break;
+		case IYAR:
+			if (isUseModernHolidays()
+					&& ((day == 4 && dayOfWeek == 3)
+							|| ((day == 3 || day == 2) && dayOfWeek == 4) || (day == 5 && dayOfWeek == 2))) {
+				return YOM_HAZIKARON;
+			}
+			// if 5 Iyar falls on Wed Yom Haatzmaut is that day. If it fal1s on Friday or Shabbos it is moved back to
+			// Thursday. If it falls on Monday it is moved to Tuesday
+			if (isUseModernHolidays()
+					&& ((day == 5 && dayOfWeek == 4)
+							|| ((day == 4 || day == 3) && dayOfWeek == 5) || (day == 6 && dayOfWeek == 3))) {
+				return YOM_HAATZMAUT;
+			}
+			if (day == 14) {
+				return PESACH_SHENI;
+			}
+			if (isUseModernHolidays() && day == 28) {
+				return YOM_YERUSHALAYIM;
+			}
+			break;
+		case SIVAN:
+			if (day == 5) {
+				return EREV_SHAVUOS;
+			}  if (day == 6 || (day == 7 && !inIsrael)) {
+				return SHAVUOS;
+			}
+			break;
+		case TAMMUZ:
+			// push off the fast day if it falls on Shabbos
+			if ((day == 17 && dayOfWeek != 7)
+					|| (day == 18 && dayOfWeek == 1)) {
+				return SEVENTEEN_OF_TAMMUZ;
+			}
+			break;
+		case AV:
+			// if Tisha B'av falls on Shabbos, push off until Sunday
+			if ((dayOfWeek == 1 && day == 10)
+					|| (dayOfWeek != 7 && day == 9)) {
+				return TISHA_BEAV;
+			}  if (day == 15) {
+				return TU_BEAV;
+			}
+			break;
+		case ELUL:
+			if (day == 29) {
+				return EREV_ROSH_HASHANA;
+			}
+			break;
+		case TISHREI:
+			if (day == 1 || day == 2) {
+				return ROSH_HASHANA;
+			}  if ((day == 3 && dayOfWeek != 7)
+					|| (day == 4 && dayOfWeek == 1)) {
+				// push off Tzom Gedalia if it falls on Shabbos
+				return FAST_OF_GEDALYAH;
+			}  if (day == 9) {
+				return EREV_YOM_KIPPUR;
+			}  if (day == 10) {
+				return YOM_KIPPUR;
+			}  if (day == 14) {
+				return EREV_SUCCOS;
+			}
+			if (day == 15 || (day == 16 && !inIsrael)) {
+				return SUCCOS;
+			}
+			if (day >= 17 && day <= 20 || (day == 16 && inIsrael)) {
+				return CHOL_HAMOED_SUCCOS;
+			}
+			if (day == 21) {
+				return HOSHANA_RABBA;
+			}
+			if (day == 22) {
+				return SHEMINI_ATZERES;
+			}
+			if (day == 23 && !inIsrael) {
+				return SIMCHAS_TORAH;
+			}
+			break;
+		case KISLEV: // no yomtov in CHESHVAN
+			// if (day == 24) {
+			// return EREV_CHANUKAH;
+			// } else
+			if (day >= 25) {
+				return CHANUKAH;
+			}
+			break;
+		case TEVES:
+			if (day == 1 || day == 2
+					|| (day == 3 && isKislevShort())) {
+				return CHANUKAH;
+			}  if (day == 10) {
+				return TENTH_OF_TEVES;
+			}
+			break;
+		case SHEVAT:
+			if (day == 15) {
+				return TU_BESHVAT;
+			}
+			break;
+		case ADAR:
+			if (!isJewishLeapYear()) {
 				// if 13th Adar falls on Friday or Shabbos, push back to Thursday
 				if (((day == 11 || day == 12) && dayOfWeek == 5)
 						|| (day == 13 && !(dayOfWeek == 6 || dayOfWeek == 7))) {
@@ -354,11 +325,27 @@ public class JewishCalendar extends JewishDate {
 				}
 				if (day == 14) {
 					return PURIM;
-				}
-				if (day == 15) {
+				}  if (day == 15) {
 					return SHUSHAN_PURIM;
 				}
-				break;
+			} else { // else if a leap year
+				if (day == 14) {
+					return PURIM_KATAN;
+				}
+			}
+			break;
+		case ADAR_II:
+			// if 13th Adar falls on Friday or Shabbos, push back to Thursday
+			if (((day == 11 || day == 12) && dayOfWeek == 5)
+					|| (day == 13 && !(dayOfWeek == 6 || dayOfWeek == 7))) {
+				return FAST_OF_ESTHER;
+			}
+			if (day == 14) {
+				return PURIM;
+			}  if (day == 15) {
+				return SHUSHAN_PURIM;
+			}
+			break;
 		}
 		// if we get to this stage, then there are no holidays for the given date return -1
 		return -1;
@@ -370,6 +357,7 @@ public class JewishCalendar extends JewishDate {
 	 *
 	 * @return true if the current day is a Yom Tov
 	 * @see #isErevYomTov()
+	 * @see #isErevYomTovSheni()
 	 * @see #isTaanis()
 	 */
 	public boolean isYomTov() {
@@ -382,9 +370,10 @@ public class JewishCalendar extends JewishDate {
 	}
 
 	/**
-	 * Returns true if the Yom Tov day has a melacha (work)  prohibition. This method will return false for a non Yom Tov day, even if it is Shabbos.
+	 * Returns true if the <em>Yom Tov</em> day has a <em>melacha</em> (work)  prohibition. This method will return false for a
+	 * non-<em>Yom Tov</em> day, even if it is <em>Shabbos</em>.
 	 *
-	 * @return if the Yom Tov day has a melacha (work)  prohibition.
+	 * @return if the <em>Yom Tov</em> day has a <em>melacha</em> (work)  prohibition.
 	 */
 	public boolean isYomTovAssurBemelacha(){
 		int holidayIndex = getYomTovIndex();
@@ -393,9 +382,53 @@ public class JewishCalendar extends JewishDate {
 	}
 
 	/**
-	 * Returns true if the current day is Chol Hamoed of Pesach or Succos.
+	 * Returns true if it is <em>Shabbos</em> or if it is a <em>Yom Tov</em> day that has a <em>melacha</em> (work)  prohibition.
+	 * This method will return false for a.
+	 * @return if the day is a <em>Yom Tov</em> that is <em>assur bemlacha</em> or <em>Shabbos</em>
+	 */
+	public boolean isAssurBemelacha(){
+		return getDayOfWeek() == 7 || isYomTovAssurBemelacha();
+	}
+
+	/**
+	 * Returns true if the day has candle lighting. This will return true on erev <em>Shabbos</em>, erev <em>Yom Tov</em>, the
+	 * first day of <em>Rosh Hashana</em> and the first days of <em>Yom Tov</em> out of Israel. It is identical
+	 * to calling {@link isTomorrowYomTov()}.
 	 *
-	 * @return true if the current day is Chol Hamoed of Pesach or Succos
+	 * @return if the day has candle lighting
+	 */
+	public boolean hasCandleLighting() {
+		return isTomorrowShabbosOrYomTov();
+	}
+
+	/**
+	 * Returns true if tomorrow is <em>Shabbos</em> or <em>Yom Tov</em>. This will return true on erev <em>Shabbos</em>, erev
+	 * <em>Yom Tov</em>, the first day of <em>Rosh Hashana</em> and <em>erev</em> the first days of <em>Yom Tov</em> out of
+	 * Israel. It is identical to calling {@link hasCandleLighting()}.
+	 * @return
+	 */
+	public boolean isTomorrowShabbosOrYomTov() {
+		return getDayOfWeek() == 6 || isErevYomTov() || isErevYomTovSheni();
+	}
+
+	/**
+	 * Returns true if the day is the second day of <em>Yom Tov</em>. This impacts the second day of <em>Rosh Hashana</em> everywhere and
+	 * the second days of Yom Tov in <em>chutz laaretz</em> (out of Israel).
+	 *
+	 * @return  if the day is the second day of <em>Yom Tov</em>.
+	 */
+	public boolean isErevYomTovSheni() {
+		return (getJewishMonth() == JewishCalendar.TISHREI && (getJewishDayOfMonth() == 1))
+		|| (! getInIsrael()
+				&& ((getJewishMonth() == JewishCalendar.NISSAN && (getJewishDayOfMonth() == 15 || getJewishDayOfMonth() == 21))
+				|| (getJewishMonth() == JewishCalendar.TISHREI && (getJewishDayOfMonth() == 15 || getJewishDayOfMonth() == 22))
+				|| (getJewishMonth() == JewishCalendar.SIVAN && getJewishDayOfMonth() == 6 )));
+	}
+
+	/**
+	 * Returns true if the current day is <em>Chol Hamoed</em> of <em>Pesach</em> or <em>Succos</em>.
+	 *
+	 * @return true if the current day is <em>Chol Hamoed</em> of <em>Pesach</em> or <em>Succos</em>
 	 * @see #isYomTov()
 	 * @see #CHOL_HAMOED_PESACH
 	 * @see #CHOL_HAMOED_SUCCOS
@@ -411,6 +444,7 @@ public class JewishCalendar extends JewishDate {
 	 *
 	 * @return true if the current day is Erev - Pesach, Shavuos, Rosh Hashana, Yom Kippur and Succos
 	 * @see #isYomTov()
+	 * @see #isErevYomTovSheni()
 	 */
 	public boolean isErevYomTov() {
 		int holidayIndex = getYomTovIndex();
@@ -529,12 +563,14 @@ public class JewishCalendar extends JewishDate {
 	}
 
 	/**
-	 * Returns the earliest time of Kiddush Levana calculated as 3 days after the molad. TODO: Currently returns the
-	 * time even if it is during the day. It should return the
-	 * {@link net.sourceforge.zmanim.ZmanimCalendar#getTzais72() Tzais} after to the time if the zman is between Alos
-	 * and Tzais.
+	 * Returns the earliest time of <em>Kiddush Levana</em> calculated as 3 days after the molad. This method returns the time
+	 * even if it is during the day when <em>Kiddush Levana</em> can't be said. Callers of this method should consider
+	 * displaying the next <em>tzais</em> if the zman is between <em>alos</em> and <em>tzais</em>.
 	 *
 	 * @return the date representing the moment 3 days after the molad.
+	 *
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana3Days()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana3Days(Date, Date)
 	 */
 	public Long getTchilasZmanKidushLevana3Days() {
 		Long molad = getMoladAsDate();
@@ -547,11 +583,14 @@ public class JewishCalendar extends JewishDate {
 	/**
 	 * Returns the earliest time of Kiddush Levana calculated as 7 days after the molad as mentioned by the <a
 	 * href="http://en.wikipedia.org/wiki/Yosef_Karo">Mechaber</a>. See the <a
-	 * href="http://en.wikipedia.org/wiki/Yoel_Sirkis">Bach's</a> opinion on this time. TODO: Currently returns the time
-	 * even if it is during the day. It should return the {@link net.sourceforge.zmanim.ZmanimCalendar#getTzais72()
-	 * Tzais} after to the time if the zman is between Alos and Tzais.
+	 * href="http://en.wikipedia.org/wiki/Yoel_Sirkis">Bach's</a> opinion on this time. This method returns the time
+	 * even if it is during the day when <em>Kiddush Levana</em> can't be said. Callers of this method should consider
+	 * displaying the next <em>tzais</em> if the zman is between <em>alos</em> and <em>tzais</em>.
 	 *
 	 * @return the date representing the moment 7 days after the molad.
+	 *
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana7Days()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana7Days(Date, Date)
 	 */
 	public Long getTchilasZmanKidushLevana7Days() {
 		Long molad = getMoladAsDate();
@@ -565,12 +604,14 @@ public class JewishCalendar extends JewishDate {
 	 * Returns the latest time of Kiddush Levana according to the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> opinion that it is calculated as
 	 * halfway between molad and molad. This adds half the 29 days, 12 hours and 793 chalakim time between molad and
-	 * molad (14 days, 18 hours, 22 minutes and 666 milliseconds) to the month's molad. TODO: Currently returns the time
-	 * even if it is during the day. It should return the {@link net.sourceforge.zmanim.ZmanimCalendar#getAlos72() Alos}
-	 * prior to the time if the zman is between Alos and Tzais.
+	 * molad (14 days, 18 hours, 22 minutes and 666 milliseconds) to the month's molad. This method returns the time
+	 * even if it is during the day when <em>Kiddush Levana</em> can't be said. Callers of this method should consider
+	 * displaying <em>alos</em> before this time if the zman is between <em>alos</em> and <em>tzais</em>.
 	 *
 	 * @return the date representing the moment halfway between molad and molad.
 	 * @see #getSofZmanKidushLevana15Days()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevanaBetweenMoldos()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevanaBetweenMoldos(Date, Date)
 	 */
 	public Long getSofZmanKidushLevanaBetweenMoldos() {
 		Long molad = getMoladAsDate();
@@ -594,12 +635,14 @@ public class JewishCalendar extends JewishDate {
 	 * {@link #getSofZmanKidushLevanaBetweenMoldos() half way between molad and mold} is of the opinion that Mechaber
 	 * agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi Dovid
 	 * Heber's very detailed writeup in Siman Daled (chapter 4) of <a
-	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. TODO: Currently returns the time even if it is
-	 * during the day. It should return the {@link net.sourceforge.zmanim.ZmanimCalendar#getAlos72() Alos} prior to the
-	 * time if the zman is between Alos and Tzais.
+	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. This method returns the time even if it is during
+	 * the day when <em>Kiddush Levana</em> can't be said. Callers of this method should consider displaying <em>alos</em>
+	 * before this time if the zman is between <em>alos</em> and <em>tzais</em>.
 	 *
 	 * @return the date representing the moment 15 days after the molad.
 	 * @see #getSofZmanKidushLevanaBetweenMoldos()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevana15Days()
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevana15Days(Date, Date)
 	 */
 	public Long getSofZmanKidushLevana15Days() {
 		Long molad = getMoladAsDate();

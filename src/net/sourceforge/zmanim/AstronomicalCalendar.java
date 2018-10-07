@@ -24,12 +24,12 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import net.sourceforge.zmanim.util.ZmanimFormatter;
 
 /**
- * A Java calendar that calculates astronomical times such as {@link #getSunrise() sunrise} and {@link #getSunset()
- * sunset} times. This class contains a {@link #getCalendar() Calendar} and can therefore use the standard Calendar
- * functionality to change dates etc... The calculation engine used to calculate the astronomical times can be changed
- * to a different implementation by implementing the abstract {@link AstronomicalCalculator} and setting it with the
- * {@link #setAstronomicalCalculator(AstronomicalCalculator)}. A number of different calculation engine implementations
- * are included in the util package.
+ * A Java calendar that calculates astronomical times such as {@link #getSunrise() sunrise}, {@link #getSunset()
+ * sunset} and twilight times. This class contains a {@link #getCalendar() Calendar} and can therefore use the standard
+ * Calendar functionality to change dates etc... The calculation engine used to calculate the astronomical times can be
+ * changed to a different implementation by implementing the abstract {@link AstronomicalCalculator} and setting it with
+ * the {@link #setAstronomicalCalculator(AstronomicalCalculator)}. A number of different calculation engine
+ * implementations are included in the util package.
  * <b>Note:</b> There are times when the algorithms can't calculate proper values for sunrise, sunset and twilight. This
  * is usually caused by trying to calculate times for areas either very far North or South, where sunrise / sunset never
  * happen on that date. This is common when calculating twilight with a deep dip below the horizon for locations as far
@@ -78,7 +78,7 @@ public class AstronomicalCalendar implements Cloneable {
 	 * the horizon at sunrise and sunset.
 	 * <b>Note </b>: it is important to note that for sunrise and sunset the {@link AstronomicalCalculator#adjustZenith
 	 * adjusted zenith} is required to account for the radius of the sun and refraction. The adjusted zenith should not
-	 * be used for calculations above or below 90&deg; since they are usuallyes are calculated as an offset to 90&deg;.
+	 * be used for calculations above or below 90&deg; since they are usually calculated as an offset to 90&deg;.
 	 */
 	public static final double GEOMETRIC_ZENITH = 90;
 
