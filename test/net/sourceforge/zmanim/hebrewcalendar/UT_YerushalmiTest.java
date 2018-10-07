@@ -13,7 +13,6 @@ public class UT_YerushalmiTest {
 	 
 	@Test
 	public void testCorrectDaf1() {
-
 		JewishCalendar jewishCalendar = new JewishCalendar(5777,6,10);
 		Assert.assertEquals(8, jewishCalendar.getDafYomiYerushalmi().getDaf());
 		Assert.assertEquals(29, jewishCalendar.getDafYomiYerushalmi().getMasechtaNumber());
@@ -22,8 +21,6 @@ public class UT_YerushalmiTest {
 
 	@Test
 	public void testCorrectDaf2() {
-		
-
 		JewishCalendar jewishCalendar = new JewishCalendar(5744,9,1);
 		Assert.assertEquals(26, jewishCalendar.getDafYomiYerushalmi().getDaf());
 		Assert.assertEquals(32, jewishCalendar.getDafYomiYerushalmi().getMasechtaNumber());
@@ -32,7 +29,6 @@ public class UT_YerushalmiTest {
 	
 	@Test
 	public void testCorrectDaf3() {
-
 		JewishCalendar jewishCalendar = new JewishCalendar(5782,3,1);
 		Assert.assertEquals(15, jewishCalendar.getDafYomiYerushalmi().getDaf());
 		Assert.assertEquals(33, jewishCalendar.getDafYomiYerushalmi().getMasechtaNumber());
@@ -41,7 +37,6 @@ public class UT_YerushalmiTest {
 
 	@Test
 	public void testCorrectSpecialDate() {
-
 		JewishCalendar jewishCalendar = new JewishCalendar(5775,7,10);
 		Assert.assertEquals(0, jewishCalendar.getDafYomiYerushalmi().getDaf());
 		Assert.assertEquals(39, jewishCalendar.getDafYomiYerushalmi().getMasechtaNumber());

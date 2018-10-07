@@ -42,8 +42,3 @@ ext {
     supportVersion = '1.0.0'
     supportTestVersion = '1.1.0-alpha3'
 }
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-}

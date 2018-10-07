@@ -17,7 +17,6 @@ public class UT_JewishDateNavigation {
 
 	@Test
 	public void jewishForwardMonthToMonth() {
-
 		JewishDate jewishDate = new JewishDate();
 		jewishDate.setJewishDate(5771, 1, 1);
 		Assert.assertEquals(5, jewishDate.getGregorianDayOfMonth());
@@ -28,7 +27,6 @@ public class UT_JewishDateNavigation {
 
 	@Test
 	public void computeRoshHashana5771() {
-
 		// At one point, this test was failing as the JewishDate class spun through a never-ending loop...
 
 		JewishDate jewishDate = new JewishDate();

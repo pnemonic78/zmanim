@@ -14,7 +14,6 @@ public class UT_DaysInJewishMonth {
 
 	@Test
 	public void daysInMonthsInHaserYear() {
-
 		assertHaser(5773);
 		assertHaser(5777);
 		assertHaser(5781);
@@ -26,7 +25,6 @@ public class UT_DaysInJewishMonth {
 
 	@Test
 	public void daysInMonthsInQesidrahYear() {
-
 		assertQesidrah(5769);
 		assertQesidrah(5772);
 		assertQesidrah(5778);
@@ -40,7 +38,6 @@ public class UT_DaysInJewishMonth {
 
 	@Test
 	public void daysInMonthsInShalemYear() {
-
 		assertShalem(5770);
 		assertShalem(5780);
 		assertShalem(5783);

@@ -17,7 +17,6 @@ public class UT_GregorianDateNavigation {
 
 	@Test
 	public void gregorianForwardMonthToMonth() {
-
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2011);
 		cal.set(Calendar.MONTH, Calendar.JANUARY);
@@ -28,7 +27,7 @@ public class UT_GregorianDateNavigation {
 		Assert.assertEquals(11, hebrewDate.getJewishMonth());
 		Assert.assertEquals(26, hebrewDate.getJewishDayOfMonth());
 
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.FEBRUARY, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(11, hebrewDate.getJewishMonth());
@@ -42,7 +41,7 @@ public class UT_GregorianDateNavigation {
 		Assert.assertEquals(12, hebrewDate.getJewishMonth());
 		Assert.assertEquals(24, hebrewDate.getJewishDayOfMonth());
 
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.MARCH, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(12, hebrewDate.getJewishMonth());
@@ -51,7 +50,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.MARCH);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.APRIL, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(13, hebrewDate.getJewishMonth());
@@ -60,7 +59,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.APRIL);
 		cal.set(Calendar.DATE, 30);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.MAY, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(1, hebrewDate.getJewishMonth());
@@ -69,7 +68,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.MAY);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.JUNE, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(2, hebrewDate.getJewishMonth());
@@ -78,7 +77,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.JUNE);
 		cal.set(Calendar.DATE, 30);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.JULY, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(3, hebrewDate.getJewishMonth());
@@ -87,7 +86,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.JULY);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.AUGUST, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(5, hebrewDate.getJewishMonth());
@@ -96,7 +95,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.AUGUST);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.SEPTEMBER, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(6, hebrewDate.getJewishMonth());
@@ -105,7 +104,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		cal.set(Calendar.DATE, 30);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.OCTOBER, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(7, hebrewDate.getJewishMonth());
@@ -114,7 +113,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.OCTOBER);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.NOVEMBER, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(5772, hebrewDate.getJewishYear());
@@ -124,7 +123,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.NOVEMBER);
 		cal.set(Calendar.DATE, 30);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(Calendar.DECEMBER, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(9, hebrewDate.getJewishMonth());
@@ -133,7 +132,7 @@ public class UT_GregorianDateNavigation {
 		cal.set(Calendar.MONTH, Calendar.DECEMBER);
 		cal.set(Calendar.DATE, 31);
 		hebrewDate.setDate(cal);
-		hebrewDate.forward();
+		hebrewDate.forward(Calendar.DATE, 1);
 		Assert.assertEquals(2012, hebrewDate.getGregorianYear());
 		Assert.assertEquals(Calendar.JANUARY, hebrewDate.getGregorianMonth());
 		Assert.assertEquals(1, hebrewDate.getGregorianDayOfMonth());
@@ -144,7 +143,6 @@ public class UT_GregorianDateNavigation {
 
 	@Test
 	public void gregorianBackwardMonthToMonth() {
-
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2011);
 		cal.set(Calendar.MONTH, Calendar.JANUARY);
@@ -258,7 +256,6 @@ public class UT_GregorianDateNavigation {
 		Assert.assertEquals(31, hebrewDate.getGregorianDayOfMonth());
 		Assert.assertEquals(11, hebrewDate.getJewishMonth());
 		Assert.assertEquals(16, hebrewDate.getJewishDayOfMonth());
-
 	}
 
 

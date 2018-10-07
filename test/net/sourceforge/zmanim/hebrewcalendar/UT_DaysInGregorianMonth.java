@@ -18,7 +18,6 @@ public class UT_DaysInGregorianMonth {
 
 	@Test
 	public void testDaysInMonth() {
-
 		JewishDate hebrewDate = new JewishDate();
 
 		Calendar cal = Calendar.getInstance();
@@ -33,7 +32,6 @@ public class UT_DaysInGregorianMonth {
 
 	@Test
 	public void testDaysInMonthLeapYear() {
-
 		JewishDate hebrewDate = new JewishDate();
 
 		Calendar cal = Calendar.getInstance();
@@ -47,7 +45,6 @@ public class UT_DaysInGregorianMonth {
 
 	@Test
 	public void testDaysInMonth100Year() {
-
 		JewishDate hebrewDate = new JewishDate();
 
 		Calendar cal = Calendar.getInstance();
@@ -61,7 +58,6 @@ public class UT_DaysInGregorianMonth {
 
 	@Test
 	public void testDaysInMonth400Year() {
-
 		JewishDate hebrewDate = new JewishDate();
 
 		Calendar cal = Calendar.getInstance();
@@ -77,7 +73,6 @@ public class UT_DaysInGregorianMonth {
 		boolean     febIsLeap,
 		JewishDate  hebrewDate
 	) {
-
 		Assert.assertEquals( 31, hebrewDate.getLastDayOfGregorianMonth( 1 + Calendar.JANUARY) );
 		Assert.assertEquals( febIsLeap ? 29 : 28, hebrewDate.getLastDayOfGregorianMonth( 1 + Calendar.FEBRUARY ) );
 		Assert.assertEquals( 31, hebrewDate.getLastDayOfGregorianMonth( 1 + Calendar.MARCH ) );

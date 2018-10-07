@@ -15,7 +15,6 @@ public class UT_JewishLeapYear {
 
 	@Test
 	public void isLeapYear() {
-
 		shouldBeLeapYear(5160);
 		shouldNotBeLeapYear(5536);
 
