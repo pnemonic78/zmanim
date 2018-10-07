@@ -482,7 +482,7 @@ public class ZmanimFormatter {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * A method that returns a JSON formatted <code>String</code> representing the serialized <code>Object</code>. The
 	 * format used is:

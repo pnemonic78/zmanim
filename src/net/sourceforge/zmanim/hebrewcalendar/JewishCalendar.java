@@ -203,10 +203,12 @@ public class JewishCalendar extends JewishDate {
 		case NISSAN:
 			if (day == 14) {
 				return EREV_PESACH;
-			}  if (day == 15 || day == 21
+			}
+			if (day == 15 || day == 21
 					|| (!inIsrael && (day == 16 || day == 22))) {
 				return PESACH;
-			}  if (day >= 17 && day <= 20
+			}
+			if (day >= 17 && day <= 20
 					|| (day == 16 && inIsrael)) {
 				return CHOL_HAMOED_PESACH;
 			}
@@ -240,7 +242,8 @@ public class JewishCalendar extends JewishDate {
 		case SIVAN:
 			if (day == 5) {
 				return EREV_SHAVUOS;
-			}  if (day == 6 || (day == 7 && !inIsrael)) {
+			}
+			if (day == 6 || (day == 7 && !inIsrael)) {
 				return SHAVUOS;
 			}
 			break;
@@ -256,7 +259,8 @@ public class JewishCalendar extends JewishDate {
 			if ((dayOfWeek == 1 && day == 10)
 					|| (dayOfWeek != 7 && day == 9)) {
 				return TISHA_BEAV;
-			}  if (day == 15) {
+			}
+			if (day == 15) {
 				return TU_BEAV;
 			}
 			break;
@@ -268,15 +272,19 @@ public class JewishCalendar extends JewishDate {
 		case TISHREI:
 			if (day == 1 || day == 2) {
 				return ROSH_HASHANA;
-			}  if ((day == 3 && dayOfWeek != 7)
+			}
+			if ((day == 3 && dayOfWeek != 7)
 					|| (day == 4 && dayOfWeek == 1)) {
 				// push off Tzom Gedalia if it falls on Shabbos
 				return FAST_OF_GEDALYAH;
-			}  if (day == 9) {
+			}
+			if (day == 9) {
 				return EREV_YOM_KIPPUR;
-			}  if (day == 10) {
+			}
+			if (day == 10) {
 				return YOM_KIPPUR;
-			}  if (day == 14) {
+			}
+			if (day == 14) {
 				return EREV_SUCCOS;
 			}
 			if (day == 15 || (day == 16 && !inIsrael)) {
@@ -307,7 +315,8 @@ public class JewishCalendar extends JewishDate {
 			if (day == 1 || day == 2
 					|| (day == 3 && isKislevShort())) {
 				return CHANUKAH;
-			}  if (day == 10) {
+			}
+			if (day == 10) {
 				return TENTH_OF_TEVES;
 			}
 			break;
@@ -325,7 +334,8 @@ public class JewishCalendar extends JewishDate {
 				}
 				if (day == 14) {
 					return PURIM;
-				}  if (day == 15) {
+				}
+				if (day == 15) {
 					return SHUSHAN_PURIM;
 				}
 			} else { // else if a leap year
@@ -342,7 +352,8 @@ public class JewishCalendar extends JewishDate {
 			}
 			if (day == 14) {
 				return PURIM;
-			}  if (day == 15) {
+			}
+			if (day == 15) {
 				return SHUSHAN_PURIM;
 			}
 			break;
@@ -393,7 +404,7 @@ public class JewishCalendar extends JewishDate {
 	/**
 	 * Returns true if the day has candle lighting. This will return true on erev <em>Shabbos</em>, erev <em>Yom Tov</em>, the
 	 * first day of <em>Rosh Hashana</em> and the first days of <em>Yom Tov</em> out of Israel. It is identical
-	 * to calling {@link isTomorrowYomTov()}.
+	 * to calling {@link #isTomorrowShabbosOrYomTov()}.
 	 *
 	 * @return if the day has candle lighting
 	 */
@@ -404,7 +415,7 @@ public class JewishCalendar extends JewishDate {
 	/**
 	 * Returns true if tomorrow is <em>Shabbos</em> or <em>Yom Tov</em>. This will return true on erev <em>Shabbos</em>, erev
 	 * <em>Yom Tov</em>, the first day of <em>Rosh Hashana</em> and <em>erev</em> the first days of <em>Yom Tov</em> out of
-	 * Israel. It is identical to calling {@link hasCandleLighting()}.
+	 * Israel. It is identical to calling {@link #hasCandleLighting()}.
 	 * @return
 	 */
 	public boolean isTomorrowShabbosOrYomTov() {
@@ -570,7 +581,7 @@ public class JewishCalendar extends JewishDate {
 	 * @return the date representing the moment 3 days after the molad.
 	 *
 	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana3Days()
-	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana3Days(Date, Date)
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana3Days(Long, Long)
 	 */
 	public Long getTchilasZmanKidushLevana3Days() {
 		Long molad = getMoladAsDate();
@@ -590,7 +601,7 @@ public class JewishCalendar extends JewishDate {
 	 * @return the date representing the moment 7 days after the molad.
 	 *
 	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana7Days()
-	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana7Days(Date, Date)
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getTchilasZmanKidushLevana7Days(Long, Long)
 	 */
 	public Long getTchilasZmanKidushLevana7Days() {
 		Long molad = getMoladAsDate();
@@ -611,7 +622,7 @@ public class JewishCalendar extends JewishDate {
 	 * @return the date representing the moment halfway between molad and molad.
 	 * @see #getSofZmanKidushLevana15Days()
 	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevanaBetweenMoldos()
-	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevanaBetweenMoldos(Date, Date)
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevanaBetweenMoldos(Long, Long)
 	 */
 	public Long getSofZmanKidushLevanaBetweenMoldos() {
 		Long molad = getMoladAsDate();
@@ -642,7 +653,7 @@ public class JewishCalendar extends JewishDate {
 	 * @return the date representing the moment 15 days after the molad.
 	 * @see #getSofZmanKidushLevanaBetweenMoldos()
 	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevana15Days()
-	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevana15Days(Date, Date)
+	 * @see net.sourceforge.zmanim.ComplexZmanimCalendar#getSofZmanKidushLevana15Days(Long, Long)
 	 */
 	public Long getSofZmanKidushLevana15Days() {
 		Long molad = getMoladAsDate();

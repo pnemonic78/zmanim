@@ -96,7 +96,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	private static double tanDeg(double deg) {
 		return Math.tan(deg * 2.0 * Math.PI / 360.0);
 	}
-	
+
 	/**
 	 * Calculate cosine of the angle in degrees
 	 * 
@@ -116,7 +116,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	private static double getHoursFromMeridian(double longitude) {
 		return longitude / DEG_PER_HOUR;
 	}
-	
+
 	/**
 	 * Calculate the approximate time of sunset or sunrise in days since midnight Jan 1st, assuming 6am and 6pm events. We
 	 * need this figure to derive the Sun's mean anomaly.
@@ -135,7 +135,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 			return dayOfYear + ((18.0 - hoursFromMeridian) / 24);
 		}
 	}
-	
+
 	/**
 	 * Calculate the Sun's mean anomaly in degrees, at sunrise or sunset, given the longitude in degrees
 	 * 
@@ -194,7 +194,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 		double cosDec = cosDeg(asinDeg(sinDec));
 		return (cosDeg(zenith) - (sinDec * sinDeg(latitude))) / (cosDec * cosDeg(latitude));
 	}
-	
+
 	/**
 	 * Calculate local mean time of rising or setting. By 'local' is meant the exact time at the location, assuming that
 	 * there were no time zone. That is, the time difference between the location and the Meridian depended entirely on
@@ -243,13 +243,13 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 
 		double localMeanTime = getLocalMeanTime(localHour, sunRightAscensionHours,
 				getApproxTimeDays(dayOfYear, getHoursFromMeridian(geoLocation.getLongitude()), isSunrise));
-		double pocessedTime = localMeanTime - getHoursFromMeridian(geoLocation.getLongitude());
-		while (pocessedTime < 0.0) {
-			pocessedTime += 24.0;
+		double processedTime = localMeanTime - getHoursFromMeridian(geoLocation.getLongitude());
+		while (processedTime < 0.0) {
+			processedTime += 24.0;
 		}
-		while (pocessedTime >= 24.0) {
-			pocessedTime -= 24.0;
+		while (processedTime >= 24.0) {
+			processedTime -= 24.0;
 		}
-		return pocessedTime;
+		return processedTime;
 	}
 }

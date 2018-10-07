@@ -134,7 +134,9 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * {@link #setCandleLightingOffset(double)} and retrieved by the {@link #getCandleLightingOffset()}.
 	 */
 	private double candleLightingOffset = 18;
-protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
+
+	protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
+
 	/**
 	 * This method will return {@link #getSeaLevelSunrise() sea level sunrise} if {@link #isUseElevation()} is false
 	 * (the default), or elevation adjusted {@link AstronomicalCalendar#getSunrise()} if it is true. This allows relevant zmanim
@@ -145,7 +147,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 * @see net.sourceforge.zmanim.AstronomicalCalendar#getSunrise()
 	 */
 	protected Long getElevationAdjustedSunrise() {
-		if(isUseElevation()) {
+		if (isUseElevation()) {
 			return super.getSunrise();
 		}
 		return getSeaLevelSunrise();
@@ -161,7 +163,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 * @see net.sourceforge.zmanim.AstronomicalCalendar#getSunset()
 	 */
 	protected Long getElevationAdjustedSunset() {
-		if(isUseElevation()) {
+		if (isUseElevation()) {
 			return super.getSunset();
 		}
 		return getSeaLevelSunset();
@@ -303,7 +305,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 * @see #getSofZmanShma(Long, Long)
 	 * @see ComplexZmanimCalendar#getShaahZmanis72Minutes()
 	 * @see ComplexZmanimCalendar#getAlos72()
-	 * @see ComplexZmanimCalendar#getSofZmanShmaMGA72Minutes() that
+	 * @see ComplexZmanimCalendar#getSofZmanShmaMGA72Minutes()
 	 */
 	public Long getSofZmanShmaMGA() {
 		return getSofZmanShma(getAlos72(), getTzais72());
@@ -488,7 +490,6 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 *         passed to this method. If the calculation can't be computed such as in the Arctic Circle where there is
 	 *         at least one day a year where the sun does not rise, and one where it does not set, a null will be
 	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
-	 *
 	 */
 	public Long getMinchaKetana(Long startOfDay, Long endOfDay) {
 		long shaahZmanis = getTemporalHour(startOfDay, endOfDay);

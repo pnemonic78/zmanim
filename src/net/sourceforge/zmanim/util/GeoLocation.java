@@ -484,7 +484,7 @@ public class GeoLocation implements Cloneable {
 		double d = Math.sqrt(dLat * dLat + q * q * dLon * dLon);
 		return d * earthRadius;
 	}
-	
+
 	/**
 	 * A method that returns an XML formatted <code>String</code> representing the serialized <code>Object</code>. Very
 	 * similar to the toString method but the return value is in an xml format. The format currently used (subject to

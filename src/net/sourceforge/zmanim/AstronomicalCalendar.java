@@ -62,7 +62,7 @@ import net.sourceforge.zmanim.util.ZmanimFormatter;
  * Long sunrise = ac.getSunrise();
  * </pre>
  *
- * 
+ *
  * @author &copy; Eliyahu Hershfeld 2004 - 2018
  */
 public class AstronomicalCalendar implements Cloneable {
@@ -307,7 +307,7 @@ public class AstronomicalCalendar implements Cloneable {
 	 * @return the {@link Long} with the offset in milliseconds added to it
 	 */
 	public Long getTimeOffset(Long time, long offset) {
-		if (time == null || offset == NEVER) {
+		if (time == null || time == NEVER || offset == NEVER) {
 			return null;
 		}
 		return time + offset;
@@ -542,7 +542,7 @@ public class AstronomicalCalendar implements Cloneable {
 			return null;
 		}
 		double calculatedTime = time;
-		
+
 		Calendar adjustedCalendar = getAdjustedCalendar();
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		cal.clear();// clear all fields
@@ -556,7 +556,7 @@ public class AstronomicalCalendar implements Cloneable {
 		calculatedTime -= minutes;
 		int seconds = (int) (calculatedTime *= 60); // retain only the seconds
 		calculatedTime -= seconds; // remaining milliseconds
-		
+
 		// Check if a date transition has occurred, or is about to occur - this indicates the date of the event is
 		// actually not the target date, but the day prior or after
 		int localTimeHours = (int)getGeoLocation().getLongitude() / 15;
@@ -620,7 +620,7 @@ public class AstronomicalCalendar implements Cloneable {
 		}
 		return degrees.doubleValue();
 	}
-	
+
 	/**
 	 * Adjusts the <code>Calendar</code> to deal with edge cases where the location crosses the antimeridian.
 	 * 

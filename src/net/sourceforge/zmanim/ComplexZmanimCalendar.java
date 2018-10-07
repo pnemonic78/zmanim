@@ -16,11 +16,10 @@
 package net.sourceforge.zmanim;
 
 import java.util.Calendar;
-import java.util.Date;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.AstronomicalCalculator;
 import net.sourceforge.zmanim.util.GeoLocation;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
 /**
  * <p>This class extends ZmanimCalendar and provides many more zmanim than available in the ZmanimCalendar. The basis for
@@ -202,7 +201,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *
 	 */
 	protected static final double ZENITH_13_POINT_24 = GEOMETRIC_ZENITH + 13.24;
-	
+
 	/**
 	 * The zenith of 19&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>alos</em> according to some opinions.
@@ -335,7 +334,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzaisGeonim6Point45Degrees()
 	 */
 	protected static final double ZENITH_6_POINT_45 = GEOMETRIC_ZENITH + 6.45;
-	
+
 	/**
 	 * The zenith of 7.65&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>misheyakir</em> according to some opinions.
@@ -343,7 +342,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMisheyakir7Point65Degrees()
 	 */
 	protected static final double ZENITH_7_POINT_65 = GEOMETRIC_ZENITH + 7.65;
-	
+
 	/**
 	 * The zenith of 7.67&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>tzais</em> according to some opinions.
@@ -351,7 +350,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMisheyakir7Point65Degrees()
 	 */
 	protected static final double ZENITH_7_POINT_67 = GEOMETRIC_ZENITH + 7.67;
-	
+
 	/**
 	 * The zenith of 9.3&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>tzais</em> (nightfall) according to some opinions.
@@ -359,7 +358,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzaisGeonim9Point3Degrees()
 	 */
 	protected static final double ZENITH_9_POINT_3 = GEOMETRIC_ZENITH + 9.3;
-	
+
 	/**
 	 * The zenith of 9.5&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>misheyakir</em> according to some opinions.
@@ -367,7 +366,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getMisheyakir9Point5Degrees()
 	 */
 	protected static final double ZENITH_9_POINT_5 = GEOMETRIC_ZENITH + 9.5;
-	
+
 	/**
 	 * The zenith of 9.75&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
 	 * calculating <em>alos</em> (dawn) and <em>tzais</em> (nightfall) according to some opinions.
@@ -648,6 +647,42 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		return getTemporalHour(getAlos120Zmanis(), getTzais120Zmanis());
 	}
 
+	/**
+	 * A method that returns the <em><a href="https://en.wikipedia.org/wiki/Shneur_Zalman_of_Liadi">Baal Hatanya</a></em>'s
+	 * a <em>shaah zmanis</em> ({@link #getTemporalHour(Long, Long) temporal hour}). This forms the base for the
+	 * <em>Baal Hatanya</em>'s  day  based calculations that are calculated
+	 * as a 1.583&deg; dip below the horizon after sunset.
+	 *
+	 * According to the <em>Baal Hatanya</em>, <em>shkiah amiti</em>, true (halachic) sunset, is when the top of the
+	 * sun's disk disappears from view at an elevation similar to the mountains of Eretz Yisrael.
+	 * This time is calculated as the point at which the center of the sun's disk is 1.583 degrees below the horizon.
+	 *
+	 *
+	 *
+	 * A method that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Long, Long) temporal hour}) calculated
+	 * based on the <em><a href="https://en.wikipedia.org/wiki/Shneur_Zalman_of_Liadi">Baal Hatanya</a></em>'s <em>netz
+	 * amiti</em> and <em>shkiah amiti</em> using a dip of 1.583&deg; below the sea level horizon. This calculation divides
+	 * the day based on the opinion of the <em>Baal Hatanya</em> that the day runs from {@link #getSunriseBaalHatanya()
+	 * netz amiti} to {@link #getSunsetBaalHatanya() shkiah amiti}. The calculations are based on a day from {@link
+	 * #getSunriseBaalHatanya() sea level netz amiti} to {@link #getSunsetBaalHatanya() sea level shkiah amiti}. The day
+	 * is split into 12 equal parts with each one being a <em>shaah zmanis</em>. This method is similar to {@link
+	 * #getTemporalHour}, but all calculations are based on a sea level sunrise and sunset.
+	 * @todo Copy sunrise and sunset comments here as applicable.
+	 * @return the <code>long</code> millisecond length of a <em>shaah zmanis</em> calculated from
+	 *         {@link #getSunriseBaalHatanya() <em>netz amiti</em> (sunrise)} to {@link #getSunsetBaalHatanya() <em>shkiah amiti</em>
+	 *         ("real" sunset)}. If the calculation can't be computed such as in the Arctic Circle where there is at least one day a
+	 *         year where the sun does not rise, and one where it does not set, {@link Long#MIN_VALUE} will be returned. See
+	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
+	 *
+	 * @see #getTemporalHour(Long, Long)
+	 * @see #getSunriseBaalHatanya()
+	 * @see #getSunsetBaalHatanya()
+	 * @see #ZENITH_1_POINT_583
+	 */
+	public long getShaahZmanisBaalHatanya() {
+		return getTemporalHour(getSunriseBaalHatanya(), getSunsetBaalHatanya());
+	}
+
 	@Override
 	public long getShaahZmanis() {
 		switch (shaahZmanisType) {
@@ -669,6 +704,8 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 				return getShaahZmanis90Minutes();
 			case MINUTES_96:
 				return getShaahZmanis96Minutes();
+			case BAAL_HATANYA:
+				return getShaahZmanisBaalHatanya();
 			default:
 				return super.getShaahZmanis();
 		}
@@ -918,7 +955,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getAlos18Degrees() {
 		return getSunriseOffsetByDegrees(ASTRONOMICAL_ZENITH);
 	}
-	
+
 	/**
 	 * A method to return <em>alos</em> (dawn) calculated when the sun is {@link #ZENITH_19_DEGREES 19&deg;} below the
 	 * eastern geometric horizon before sunrise. This is the <em><a href="https://en.wikipedia.org/wiki/Maimonides"
@@ -1024,7 +1061,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getMisheyakir10Point2Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_10_POINT_2);
 	}
-	
+
 	/**
 	 * This method returns <em>misheyakir</em> based on the position of the sun when it is {@link #ZENITH_7_POINT_65
 	 * 7.65&deg;} below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). The degrees are based on a 35/36 minute zman
@@ -1055,7 +1092,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getMisheyakir7Point65Degrees() {
 		return getSunriseOffsetByDegrees(ZENITH_7_POINT_65);
 	}
-	
+
 	/**
 	 * This method returns <em>misheyakir</em> based on the position of the sun when it is {@link #ZENITH_9_POINT_5
 	 * 9.5&deg;} below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is based on Rabbi Dovid Kronglass's
@@ -2164,8 +2201,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getTzaisGeonim4Point8Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_4_POINT_8);
 	}
-	
-	
+
 	/**
 	 * This method returns the <em>tzais</em> (nightfall) based on the opinion of the <em>Geonim</em> as calculated by
 	 * <a href="https://en.wikipedia.org/wiki/Yechiel_Michel_Tucazinsky">Rabbi Yechiel Michel Tucazinsky</a>. It is
@@ -2201,7 +2237,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getTzaisGeonim7Point083Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_7_POINT_083);
 	}
-	
+
 	/**
 	 * This method returns <em>tzais</em> (nightfall) based on the opinion of the <em>Geonim</em> calculated as 45 minutes
 	 * after sunset during the summer solstice in New York, when the <em>neshef</em> (twilight) is the longest. The sun's
@@ -2243,7 +2279,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getTzaisGeonim8Point5Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_8_POINT_5);
 	}
-	
+
 	/**
 	 * This method returns the <em>tzais</em> (nightfall) based on the calculations used in the <a href=
 	 * "http://www.worldcat.org/oclc/243303103">Luach Itim Lebinah</a> as the stringent time for tzais.  It is calculated
@@ -2257,7 +2293,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Long getTzaisGeonim9Point3Degrees() {
 		return getSunsetOffsetByDegrees(ZENITH_9_POINT_3);
 	}
-	
+
 	/**
 	 * This method returns the <em>tzais</em> (nightfall) based on the opinion of the <em>Geonim</em> calculated as 60
 	 * minutes after sunset during the equinox in New York. The sun's position at this time computes to
@@ -2729,53 +2765,54 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getSofZmanKidushLevanaBetweenMoldos()
 	 */
 	public Long getSofZmanKidushLevanaBetweenMoldos(Long alos, Long tzais) {
-        JewishCalendar jewishCalendar = new JewishCalendar();
-        jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-                getCalendar().get(Calendar.DAY_OF_MONTH));
+		final Calendar calendar = getCalendar();
+		JewishCalendar jewishCalendar = new JewishCalendar();
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 
-        // Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in French
-        // Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush Levana
-        // will be on the 12th of the Teves. In the case of Anadyr, Russia on Jan, 2071, sof zman Kiddush Levana between the
-        // moldos will occur is on the night of 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
-        if (jewishCalendar.getJewishDayOfMonth() < 11 || jewishCalendar.getJewishDayOfMonth() > 16) {
-            return null;
-        }
-        return getMoladBasedTime(jewishCalendar.getSofZmanKidushLevanaBetweenMoldos(), alos, tzais, false);
+		// Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in French
+		// Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush Levana
+		// will be on the 12th of the Teves. In the case of Anadyr, Russia on Jan, 2071, sof zman Kiddush Levana between the
+		// moldos will occur is on the night of 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
+		if (jewishCalendar.getJewishDayOfMonth() < 11 || jewishCalendar.getJewishDayOfMonth() > 16) {
+			return null;
+		}
+		return getMoladBasedTime(jewishCalendar.getSofZmanKidushLevanaBetweenMoldos(), alos, tzais, false);
 	}
 
-    /**
-     * Returns the Date of the molad based time if it occurs on the current date.Since Kiddush Levana can only be said
-     * during the day, there are parameters to limit it to between <em>alos</em> and <em>tzais</em>. If the time occurs
-     * between alos and tzais, tzais will be returned
-     *
-     * @param moladBasedTime
-     *            the molad based time such as molad, tchilas and sof zman Kiddush Levana
-     * @param alos
-     *            optional start of day to limit molad times to the end of the night before or beginning of the next night. Ignored if
-     *            either this or tzais are null.
-     * @param tzais
-     *            optional end of day to limit molad times to the end of the night before or beginning of the next night. Ignored if
-     *            either this or alos are null
-     * @param techila
-     *            is it the start of Kiddush Levana time or the end? If it is start roll it to the next <em>tzais</em>, and and if it
-     *            is the end, return the end of the previous night (alos passed in). Ignored if either alos or tzais are null.
-     * @return the molad based time. If the zman does not occur during the current date, null will be returned.
-     */
-    private Long getMoladBasedTime(Long moladBasedTime, Long alos, Long tzais, boolean techila) {
-        Long lastMidnight = getMidnightLastNight();
-        Long midnightTonigh = getMidnightTonight();
-        if (!((moladBasedTime < lastMidnight) || (moladBasedTime > midnightTonigh))) {
-            if (alos != null || tzais != null) {
-                if (techila && !((moladBasedTime < tzais) || (moladBasedTime > alos))) {
-                    return tzais;
-                } else {
-                    return alos;
-                }
-            }
-            return moladBasedTime;
-        }
-        return null;
-    }
+	/**
+	 * Returns the Date of the molad based time if it occurs on the current date.Since Kiddush Levana can only be said
+	 * during the day, there are parameters to limit it to between <em>alos</em> and <em>tzais</em>. If the time occurs
+	 * between alos and tzais, tzais will be returned
+	 *
+	 * @param moladBasedTime
+	 *            the molad based time such as molad, tchilas and sof zman Kiddush Levana
+	 * @param alos
+	 *            optional start of day to limit molad times to the end of the night before or beginning of the next night. Ignored if
+	 *            either this or tzais are null.
+	 * @param tzais
+	 *            optional end of day to limit molad times to the end of the night before or beginning of the next night. Ignored if
+	 *            either this or alos are null
+	 * @param techila
+	 *            is it the start of Kiddush Levana time or the end? If it is start roll it to the next <em>tzais</em>, and and if it
+	 *            is the end, return the end of the previous night (alos passed in). Ignored if either alos or tzais are null.
+	 * @return the molad based time. If the zman does not occur during the current date, null will be returned.
+	 */
+	private Long getMoladBasedTime(Long moladBasedTime, Long alos, Long tzais, boolean techila) {
+		Long lastMidnight = getMidnightLastNight();
+		Long midnightTonigh = getMidnightTonight();
+		if (!((moladBasedTime < lastMidnight) || (moladBasedTime > midnightTonigh))) {
+			if (alos != null || tzais != null) {
+				if (techila && !((moladBasedTime < tzais) || (moladBasedTime > alos))) {
+					return tzais;
+				} else {
+					return alos;
+				}
+			}
+			return moladBasedTime;
+		}
+		return null;
+	}
 
 	/**
 	 * Returns the latest time of Kiddush Levana according to the <a
@@ -2828,17 +2865,18 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getSofZmanKidushLevana15Days()
 	 */
 	public Long getSofZmanKidushLevana15Days(Long alos, Long tzais) {
-        JewishCalendar jewishCalendar = new JewishCalendar();
-        jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-                getCalendar().get(Calendar.DAY_OF_MONTH));
-        // Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in
-        // French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush
-        // Levana will be on the 12th of the Teves. in the case of Anadyr, Russia on Jan, 2071, sof zman kiddush levana will
-        // occur after midnight on the 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
-        if (jewishCalendar.getJewishDayOfMonth() < 11 || jewishCalendar.getJewishDayOfMonth() > 17) {
-            return null;
-        }
-        return getMoladBasedTime(jewishCalendar.getSofZmanKidushLevana15Days(), alos, tzais, false);
+		final Calendar calendar = getCalendar();
+		JewishCalendar jewishCalendar = new JewishCalendar();
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+		// Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in
+		// French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush
+		// Levana will be on the 12th of the Teves. in the case of Anadyr, Russia on Jan, 2071, sof zman kiddush levana will
+		// occur after midnight on the 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
+		if (jewishCalendar.getJewishDayOfMonth() < 11 || jewishCalendar.getJewishDayOfMonth() > 17) {
+			return null;
+		}
+		return getMoladBasedTime(jewishCalendar.getSofZmanKidushLevana15Days(), alos, tzais, false);
 	}
 
 	/**
@@ -2866,21 +2904,21 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		return getSofZmanKidushLevana15Days(null, null);
 	}
 
-    /**
-     * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-     * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
-     * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
-     * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
-     * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.
-     *
-     * @return the Date representing the moment 3 days after the molad. If the time occurs between <em>alos</em> and
-     *         <em>tzais</em>, <em>tzais</em> will be returned
-     * @see #getTchilasZmanKidushLevana3Days(Long, Long)
-     * @see #getTchilasZmanKidushLevana7Days()
-     */
-    public Long getTchilasZmanKidushLevana3Days() {
-        return getTchilasZmanKidushLevana3Days(getAlos72(), getTzais72());
-    }
+	/**
+	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
+	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
+	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
+	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.
+	 *
+	 * @return the Date representing the moment 3 days after the molad. If the time occurs between <em>alos</em> and
+	 *         <em>tzais</em>, <em>tzais</em> will be returned
+	 * @see #getTchilasZmanKidushLevana3Days(Long, Long)
+	 * @see #getTchilasZmanKidushLevana7Days()
+	 */
+	public Long getTchilasZmanKidushLevana3Days() {
+		return getTchilasZmanKidushLevana3Days(getAlos72(), getTzais72());
+	}
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbeinu Yonah</em>'s opinion that it can
@@ -2907,10 +2945,11 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getTchilasZmanKidushLevana3Days()
 	 */
 	public Long getTchilasZmanKidushLevana3Days(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
-		
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+
 		// Do not calculate for impossible dates, but account for extreme cases. Tchilas zman kiddush Levana 3 days for
 		// the extreme case of Rapa Iti in French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on the evening
 		// of the 30th, the second night of Rosh Chodesh. The 3rd day after the <em>molad</em> will be on the 4th of the month.
@@ -2920,15 +2959,15 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 			return null;
 		}
 
-        Long zman = getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana3Days(), null, null, true);
-		
+		Long zman = getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana3Days(), null, null, true);
+
 		//Get the following month's zman kiddush Levana for the extreme case of Rapa Iti in French Polynesia on Dec 2027 when
 		// kiddush Levana can be said on Rosh Chodesh (the evening of the 30th). See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (page 32)
 		if (zman == null && jewishCalendar.getJewishDayOfMonth() == 30) {
 			jewishCalendar.forward(Calendar.MONTH, 1);
 			zman = getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana3Days(), null, null, true);
 		}
-		
+
 		return zman;
 	}
 	
@@ -2944,17 +2983,18 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getMoladAsDate()
 	 */
 	public Long getZmanMolad() {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
-		
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+
 		// Optimize to not calculate for impossible dates, but account for extreme cases. The molad in the extreme case of Rapa
 		// Iti in French Polynesia on Dec 2027 occurs on the night of the 27th of Kislev. In the case of Anadyr, Russia on
 		// Jan 2071, the molad will be on the 2nd day of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
 		if (jewishCalendar.getJewishDayOfMonth() > 2 && jewishCalendar.getJewishDayOfMonth() < 27) {
 			return null;
 		}
-        Long molad = getMoladBasedTime(jewishCalendar.getMoladAsDate(), null, null, true);
+		Long molad = getMoladBasedTime(jewishCalendar.getMoladAsDate(), null, null, true);
 
 		// deal with molad that happens on the end of the previous month
 		if (molad == null && jewishCalendar.getJewishDayOfMonth() > 26 ) {
@@ -2963,7 +3003,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		}
 		return molad;
 	}
-	
+
 	/**
 	 * Used by Molad based zmanim to determine if zmanim occur during the current day.
 	 * @see #getMoladBasedTime(Long, Long, Long, boolean)
@@ -2979,20 +3019,20 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		return midnight.getTimeInMillis();
 	}
 
-    /**
-     * Used by Molad based zmanim to determine if zmanim occur during the current day.
-     * @see #getMoladBasedTime(Long, Long, Long, boolean)
-     * @return following midnight
-     */
-    private Long getMidnightTonight() {
-        Calendar midnight = (Calendar)getCalendar().clone();
-        midnight.add(Calendar.DAY_OF_YEAR, 1);//roll to tonight
-        midnight.set(Calendar.HOUR_OF_DAY, 0);
-        midnight.set(Calendar.MINUTE, 0);
-        midnight.set(Calendar.SECOND, 0);
-        midnight.set(Calendar.MILLISECOND, 0);
-        return midnight.getTimeInMillis();
-    }
+	/**
+	 * Used by Molad based zmanim to determine if zmanim occur during the current day.
+	 * @see #getMoladBasedTime(Long, Long, Long, boolean)
+	 * @return following midnight
+	 */
+	private Long getMidnightTonight() {
+		Calendar midnight = (Calendar)getCalendar().clone();
+		midnight.add(Calendar.DAY_OF_YEAR, 1);//roll to tonight
+		midnight.set(Calendar.HOUR_OF_DAY, 0);
+		midnight.set(Calendar.MINUTE, 0);
+		midnight.set(Calendar.SECOND, 0);
+		midnight.set(Calendar.MILLISECOND, 0);
+		return midnight.getTimeInMillis();
+	}
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to the opinions that it should not be said until 7
@@ -3017,10 +3057,11 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see JewishCalendar#getTchilasZmanKidushLevana7Days()
 	 */
 	public Long getTchilasZmanKidushLevana7Days(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
-		
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+
 		// Optimize to not calculate for impossible dates, but account for extreme cases. Tchilas zman kiddush Levana 7 days for
 		// the extreme case of Rapa Iti in French Polynesia on Jan 2028 (when kiddush Levana 3 days can be said on the evening
 		// of the 30th, the second night of Rosh Chodesh), the 7th day after the molad will be on the 4th of the month.
@@ -3029,7 +3070,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		if (jewishCalendar.getJewishDayOfMonth() < 4 || jewishCalendar.getJewishDayOfMonth() > 9) {
 			return null;
 		}
-		
+
 		return getMoladBasedTime(jewishCalendar.getTchilasZmanKidushLevana7Days(), alos, tzais, true);
 	}
 
@@ -3183,7 +3224,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		Long sunrise = clonedCal.getSeaLevelSunrise();
 		return getTimeOffset(sunset, getTemporalHour(sunset, sunrise) * 6);
 	}
-	
+
 	/**
 	 * A method that returns the <em><a href="https://en.wikipedia.org/wiki/Shneur_Zalman_of_Liadi">Baal Hatanya</a></em>'s
 	 * <em>netz amiti</em> (sunrise) without {@link AstronomicalCalculator#getElevationAdjustment(double)
@@ -3251,42 +3292,6 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 */
 	private Long getSunsetBaalHatanya() {
 		return getSunsetOffsetByDegrees(ZENITH_1_POINT_583);
-	}
-
-	/**
-	 * A method that returns the <em><a href="https://en.wikipedia.org/wiki/Shneur_Zalman_of_Liadi">Baal Hatanya</a></em>'s
-	 * a <em>shaah zmanis</em> ({@link #getTemporalHour(Long, Long) temporal hour}). This forms the base for the
-	 * <em>Baal Hatanya</em>'s  day  based calculations that are calculated
-	 * as a 1.583&deg; dip below the horizon after sunset.
-	 * 
-	 * According to the <em>Baal Hatanya</em>, <em>shkiah amiti</em>, true (halachic) sunset, is when the top of the 
-	 * sun's disk disappears from view at an elevation similar to the mountains of Eretz Yisrael.
-	 * This time is calculated as the point at which the center of the sun's disk is 1.583 degrees below the horizon.
-	 * 
-	 * 
-	 * 
-	 * A method that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Long, Long) temporal hour}) calculated 
-	 * based on the <em><a href="https://en.wikipedia.org/wiki/Shneur_Zalman_of_Liadi">Baal Hatanya</a></em>'s <em>netz
-	 * amiti</em> and <em>shkiah amiti</em> using a dip of 1.583&deg; below the sea level horizon. This calculation divides
-	 * the day based on the opinion of the <em>Baal Hatanya</em> that the day runs from {@link #getSunriseBaalHatanya()
-	 * netz amiti} to {@link #getSunsetBaalHatanya() shkiah amiti}. The calculations are based on a day from {@link
-	 * #getSunriseBaalHatanya() sea level netz amiti} to {@link #getSunsetBaalHatanya() sea level shkiah amiti}. The day
-	 * is split into 12 equal parts with each one being a <em>shaah zmanis</em>. This method is similar to {@link
-	 * #getTemporalHour}, but all calculations are based on a sea level sunrise and sunset.
-	 * @todo Copy sunrise and sunset comments here as applicable.
-	 * @return the <code>long</code> millisecond length of a <em>shaah zmanis</em> calculated from
-	 *         {@link #getSunriseBaalHatanya() <em>netz amiti</em> (sunrise)} to {@link #getSunsetBaalHatanya() <em>shkiah amiti</em>
-	 *         ("real" sunset)}. If the calculation can't be computed such as in the Arctic Circle where there is at least one day a
-	 *         year where the sun does not rise, and one where it does not set, {@link Long#MIN_VALUE} will be returned. See
-	 *         detailed explanation on top of the {@link AstronomicalCalendar} documentation.
-	 * 
-	 * @see #getTemporalHour(Long, Long)
-	 * @see #getSunriseBaalHatanya()
-	 * @see #getSunsetBaalHatanya()
-	 * @see #ZENITH_1_POINT_583
-	 */
-	public long getShaahZmanisBaalHatanya() {
-		return getTemporalHour(getSunriseBaalHatanya(), getSunsetBaalHatanya());
 	}
 
 	/**
@@ -3375,6 +3380,20 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	}
 
 	/**
+	 * This method returns <em>chatzos</em> (midday) following the opinion of the Baal Hatanya that the day for Jewish halachic
+	 * times start at {@link #getSunriseBaalHatanya() <em>netz amiti</em> (sunrise)} and ends at {@link #getSunsetBaalHatanya()
+	 * <em>shkiah amiti</em> (sunset)}.
+	 *
+	 * @see AstronomicalCalendar#getSunTransit()
+	 * @return the <code>Date</code> of chatzos. If the calculation can't be computed such as in the Arctic Circle where
+	 *         there is at least one day where the sun does not rise, and one where it does not set, a null will be
+	 *         returned. See detailed explanation on top of the {@link AstronomicalCalendar} documentation.
+	 */
+	public Long getChatzosBaalHatanya() {
+		return getSunTransit(getSunriseBaalHatanya(), getSunsetBaalHatanya());
+	}
+
+	/**
 	 * This method returns the time of <em>mincha gedola</em>. <em>Mincha gedola</em> is the earliest time one can pray
 	 * mincha. The <em><a href="https://en.wikipedia.org/wiki/Maimonides">Rambam</a></em> is of the opinion that it is
 	 * better to delay <em>mincha</em> until <em>{@link #getMinchaKetanaBaalHatanya() mincha ketana}</em> while the
@@ -3410,11 +3429,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
 	public Long getMinchaGedolaBaalHatanyaGreaterThan30() {
-		if (getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5) == null || getMinchaGedolaBaalHatanya() == null) {
+		Long minchag30 = getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5);
+		Long minchagz = getMinchaGedolaBaalHatanya();
+		if (minchag30 == null || minchagz == null) {
 			return null;
 		} else {
-			return getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5).compareTo(getMinchaGedolaBaalHatanya()) > 0 
-					? getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5) : getMinchaGedolaBaalHatanya();
+			return minchag30.compareTo(minchagz) > 0 ? minchag30 : minchagz;
 		}
 	}
 
@@ -3467,6 +3487,6 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_6_DEGREES
 	 */
 	public Long getTzaisBaalHatanya() {
-		return this.getSunsetOffsetByDegrees(ZENITH_6_DEGREES);
+		return getSunsetOffsetByDegrees(ZENITH_6_DEGREES);
 	}
 }
