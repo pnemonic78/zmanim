@@ -15,8 +15,11 @@
  */
 package net.sourceforge.zmanim;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.AstronomicalCalculator;
 import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.util.Calendar;
 
 /**
  * The ZmanimCalendar is a specialized calendar that can calculate sunrise and sunset and Jewish <em>zmanim</em>
@@ -141,7 +144,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 *          {@link AstronomicalCalendar#getSunrise()} if it is true.
 	 * @see net.sourceforge.zmanim.AstronomicalCalendar#getSunrise()
 	 */
-	protected Date getElevationAdjustedSunrise() {
+	protected Long getElevationAdjustedSunrise() {
 		if(isUseElevation()) {
 			return super.getSunrise();
 		}
@@ -157,7 +160,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 *          {@link AstronomicalCalendar#getSunset()} if it is true.
 	 * @see net.sourceforge.zmanim.AstronomicalCalendar#getSunset()
 	 */
-	protected Date getElevationAdjustedSunset() {
+	protected Long getElevationAdjustedSunset() {
 		if(isUseElevation()) {
 			return super.getSunset();
 		}
@@ -165,7 +168,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	}
 
 	/**
-	 * A method that returns <em>tzais</em> (nightfall) when the sun is {@link ZENITH_8_POINT_5 8.5&deg;} below the
+	 * A method that returns <em>tzais</em> (nightfall) when the sun is {@link #ZENITH_8_POINT_5 8.5&deg;} below the
 	 * {@link #GEOMETRIC_ZENITH geometric horizon} (90&deg;) after {@link #getSunset sunset}, a time that Rabbi Meir
 	 * Posen in his the <em><a href="http://www.worldcat.org/oclc/29283612">Ohr Meir</a></em> calculated that 3 small
 	 * stars are visible, which is later than the required 3 medium stars. See the {@link #ZENITH_8_POINT_5} constant.
@@ -677,7 +680,7 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 * This is a utility method to determine if the current Date (date-time) passed in has a <em>melacha</em> (work) prohibition.
 	 * Since there are many opinions on the time of <em>tzais</em>, the <em>tzais</em> for the current day has to be passed to this
 	 * class. Sunset is the classes current day's {@link #getElevationAdjustedSunset() elevation adjusted sunset} that observes the
-	 * {@link isUseElevation()} settings. The {@link JewishCalendar#getInIsrael()} will be set by the inIsrael parameter.
+	 * {@link #isUseElevation()} settings. The {@link JewishCalendar#getInIsrael()} will be set by the inIsrael parameter.
 	 *
 	 * @param currentTime the current time
 	 * @param tzais the time of tzais
@@ -689,17 +692,17 @@ protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
 	 * @see JewishCalendar#hasCandleLighting()
 	 * @see JewishCalendar#setInIsrael(boolean)
 	 */
-	public boolean isAssurBemlacha(Date currentTime, Date tzais, boolean inIsrael) {
+	public boolean isAssurBemlacha(Long currentTime, Long tzais, boolean inIsrael) {
 		JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
 				getCalendar().get(Calendar.DAY_OF_MONTH));
 		jewishCalendar.setInIsrael(inIsrael);
 
-		if(jewishCalendar.hasCandleLighting() && currentTime.compareTo(getElevationAdjustedSunset()) >= 0) { //erev shabbos, YT or YT sheni and after shkiah
+		if (jewishCalendar.hasCandleLighting() && currentTime.compareTo(getElevationAdjustedSunset()) >= 0) { //erev shabbos, YT or YT sheni and after shkiah
 			return true;
 		}
 
-		if(jewishCalendar.isAssurBemelacha()  && currentTime.compareTo(tzais) <= 0) { //is shabbos or YT and it is before tzais
+		if (jewishCalendar.isAssurBemelacha()  && currentTime.compareTo(tzais) <= 0) { //is shabbos or YT and it is before tzais
 			return true;
 		}
 

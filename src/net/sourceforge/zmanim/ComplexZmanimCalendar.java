@@ -2761,12 +2761,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
      *            is the end, return the end of the previous night (alos passed in). Ignored if either alos or tzais are null.
      * @return the molad based time. If the zman does not occur during the current date, null will be returned.
      */
-    private Long getMoladBasedTime(Long moladBasedTime, Long alos, Date tzais, boolean techila) {
+    private Long getMoladBasedTime(Long moladBasedTime, Long alos, Long tzais, boolean techila) {
         Long lastMidnight = getMidnightLastNight();
         Long midnightTonigh = getMidnightTonight();
-        if (!(moladBasedTime.before(lastMidnight) || moladBasedTime.after(midnightTonigh))){
+        if (!((moladBasedTime < lastMidnight) || (moladBasedTime > midnightTonigh))) {
             if (alos != null || tzais != null) {
-                if (techila && !(moladBasedTime.before(tzais) || moladBasedTime.after(alos))){
+                if (techila && !((moladBasedTime < tzais) || (moladBasedTime > alos))) {
                     return tzais;
                 } else {
                     return alos;
