@@ -61,15 +61,9 @@ import net.sourceforge.zmanim.util.ZmanimFormatter;
  * ac.getCalendar().set(Calendar.DAY_OF_MONTH, 8);
  * Long sunrise = ac.getSunrise();
  * </pre>
-<<<<<<< HEAD
  *
- *
- * @author &copy; Eliyahu Hershfeld 2004 - 2016
-=======
- * 
  * 
  * @author &copy; Eliyahu Hershfeld 2004 - 2018
->>>>>>> KosherJava/master
  */
 public class AstronomicalCalendar implements Cloneable {
 
@@ -226,40 +220,7 @@ public class AstronomicalCalendar implements Cloneable {
 		if (Double.isNaN(sunset)) {
 			return null;
 		} else {
-<<<<<<< HEAD
-			return getAdjustedSunsetDate(getDateFromTime(sunset), getSunrise());
-		}
-	}
-
-	/**
-	 * A method that will roll the sunset time forward a day if sunset occurs before sunrise. This is a rare occurrence
-	 * and will typically happen when calculating very early and late twilights in a location with a time zone far off
-	 * from its natural 15&deg; boundaries. This method will ensure that in this case, the sunset will be incremented to
-	 * the following date. An example of this is Marquette, Michigan that far west of the natural boundaries for EST.
-	 * When you add in DST this pushes it an additional hour off. Calculating the extreme 26&deg;twilight on March 6th
-	 * it start at 2:34:30 on the 6th and end at 1:01:46 on the following day March 7th. Occurrences are more common in
-	 * the polar region for dips as low as 3&deg; (Tested for Hooper Bay, Alaska). TODO: Since the occurrences are rare,
-	 * look for optimization to avoid relatively expensive calls to this method.
-	 *
-	 * @param sunset
-	 *            the sunset date to adjust if needed
-	 * @param sunrise
-	 *            the sunrise to compare to the sunset
-	 * @return the adjusted sunset date. If the calculation can't be computed such as in the Arctic Circle where there
-	 *         is at least one day a year where the sun does not rise, and one where it does not set, a null will be
-	 *         returned. See detailed explanation on top of the page.
-	 */
-	private Long getAdjustedSunsetDate(Long sunset, Long sunrise) {
-		if (sunset != null && sunrise != null && sunrise.compareTo(sunset) >= 0) {
-			Calendar clonedCalendar = (Calendar) getCalendar().clone();
-			clonedCalendar.setTimeInMillis(sunset);
-			clonedCalendar.add(Calendar.DAY_OF_MONTH, 1);
-			return clonedCalendar.getTimeInMillis();
-		} else {
-			return sunset;
-=======
 			return getDateFromTime(sunset, false);
->>>>>>> KosherJava/master
 		}
 	}
 
@@ -571,20 +532,12 @@ public class AstronomicalCalendar implements Cloneable {
 	 * A method that returns a <code>Long</code> from the time passed in as a parameter.
 	 *
 	 * @param time
-<<<<<<< HEAD
-	 *            The time to be set as the time for the date. The time expected is in the format: 18.75
-	 *            for 6:45:00 PM.
-	 * @return The date.
-	 */
-	protected Long getDateFromTime(double time) {
-=======
 	 *            The time to be set as the time for the <code>Date</code>. The time expected is in the format: 18.75
 	 *            for 6:45:00 PM.time is sunrise and false if it is sunset
 	 * @param isSunrise true if the 
 	 * @return The Date.
 	 */
-	protected Date getDateFromTime(double time, boolean isSunrise) {
->>>>>>> KosherJava/master
+	protected Long getDateFromTime(double time, boolean isSunrise) {
 		if (Double.isNaN(time)) {
 			return null;
 		}
