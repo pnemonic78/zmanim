@@ -148,7 +148,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Long getElevationAdjustedSunrise() {
 		if (isUseElevation()) {
-			return super.getSunrise();
+			return getSunrise();
 		}
 		return getSeaLevelSunrise();
 	}
@@ -164,7 +164,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Long getElevationAdjustedSunset() {
 		if (isUseElevation()) {
-			return super.getSunset();
+			return getSunset();
 		}
 		return getSeaLevelSunset();
 	}
