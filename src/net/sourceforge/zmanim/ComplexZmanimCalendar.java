@@ -2800,10 +2800,10 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 */
 	private Long getMoladBasedTime(Long moladBasedTime, Long alos, Long tzais, boolean techila) {
 		Long lastMidnight = getMidnightLastNight();
-		Long midnightTonigh = getMidnightTonight();
-		if (!((moladBasedTime < lastMidnight) || (moladBasedTime > midnightTonigh))) {
+		Long midnightTonight = getMidnightTonight();
+		if ((moladBasedTime >= lastMidnight) && (moladBasedTime <= midnightTonight)) {
 			if (alos != null || tzais != null) {
-				if (techila && !((moladBasedTime < tzais) || (moladBasedTime > alos))) {
+				if (techila && (moladBasedTime >= tzais) && (moladBasedTime <= alos)) {
 					return tzais;
 				} else {
 					return alos;
@@ -2892,8 +2892,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * This method is available in the current release of the API but may change or be removed in the future since it depends
 	 * on the still changing {@link JewishCalendar} and related classes.
 	 *
-	 * @return the date representing the moment 15 days after the <em>molad</em>. If the time occurs between
-	 *         <em>alos</em> and <em>tzais</em>, <em>alos</em> will be returned
+	 * @return the date representing the moment 15 days after the <em>molad</em>.
 	 *
 	 * @see #getSofZmanKidushLevana15Days(Long, Long)
 	 * @see #getSofZmanKidushLevanaBetweenMoldos()
@@ -2906,7 +2905,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * be said 3 days after the molad. If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
 	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
 	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
 	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.
