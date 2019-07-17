@@ -35,6 +35,11 @@ sourceSets {
     }
 }
 
+dependencies {
+    // Testing
+    testImplementation 'junit:junit:4.12'
+}
+
 ext {
     androidBuildSdkVersion = 29
     androidBuildMinSdkVersion = 15
