@@ -548,7 +548,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	}
 
 	/**
-	 * Converts the the {@link JewishDate#NISSAN} based constants used by this class to numeric month starting from
+	 * Converts the {@link JewishDate#NISSAN} based constants used by this class to numeric month starting from
 	 * {@link JewishDate#TISHREI}. This is required for Molad claculations.
 	 *
 	 * @param year
@@ -942,6 +942,15 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 			}
 		}
 		return elapsedDays;
+	}
+
+	/**
+	 * returns the number of days from Rosh Hashana of the date passed in, to the full date passed in.
+	 * 
+	 * @return the number of days
+	 */
+	public int getDaysSinceStartOfJewishYear() {
+		return getDaysSinceStartOfJewishYear(getJewishYear(), getJewishMonth(), getJewishDayOfMonth());
 	}
 
 	/**

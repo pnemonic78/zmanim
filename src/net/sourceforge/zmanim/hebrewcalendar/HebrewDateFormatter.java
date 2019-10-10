@@ -1,6 +1,6 @@
 /*
  * Zmanim Java API
- * Copyright (C) 2011 - 2018 Eliyahu Hershfeld
+ * Copyright (C) 2011 - 2019 Eliyahu Hershfeld
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
  * Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option)
@@ -25,20 +25,23 @@ import java.text.SimpleDateFormat;
  * <ul>
  * <li>21 Shevat, 5729</li>
  * <li>&#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DB;&#x5D8;</li>
- * <li>&#x5D4;&#x5F3; &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8;</li>
- * <li>&#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DA;&#x5F3;</li>
+ * <li>&#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5D4;&#x5F3;&#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8;</li>
+ * <li>&#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x05E4; or
+ * &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x05E3;</li>
+ * <li>&#x05DB;&#x05F3; &#x05E9;&#x05D1;&#x05D8; &#x05D5;&#x05F3; &#x05D0;&#x05DC;&#x05E4;&#x05D9;&#x05DD;</li>
  * </ul>
  * 
  * @see net.sourceforge.zmanim.hebrewcalendar.JewishDate
  * @see net.sourceforge.zmanim.hebrewcalendar.JewishCalendar
  * 
- * @author &copy; Eliyahu Hershfeld 2011 - 2018
+ * @author &copy; Eliyahu Hershfeld 2011 - 2019
  */
 public class HebrewDateFormatter {
 	private boolean hebrewFormat = false;
 	private boolean useLonghebrewYears = false;
 	private boolean useGershGershayim = true;
 	private boolean longWeekFormat = true;
+	private boolean useFinalFormLetters = false;
 	private SimpleDateFormat weekFormat = null;
 
 	/**
@@ -80,10 +83,10 @@ public class HebrewDateFormatter {
 	private String transliteratedShabbosDayOfweek = "Shabbos";
 
 	/**
-	 * Returns the day of Shabbos transliterated into Latin chars. The default uses Ashkenazi pronounciation "Shabbos".
+	 * Returns the day of Shabbos transliterated into Latin chars. The default uses Ashkenazi pronunciation "Shabbos".
 	 * This can be overwritten using the {@link #setTransliteratedShabbosDayOfWeek(String)}
 	 * 
-	 * @return the transliteratedShabbos. The default list of months uses Ashkenazi pronounciation "Shabbos".
+	 * @return the transliteratedShabbos. The default list of months uses Ashkenazi pronunciation "Shabbos".
 	 * @see #setTransliteratedShabbosDayOfWeek(String)
 	 * @see #formatDayOfWeek(JewishDate)
 	 */
@@ -138,7 +141,7 @@ public class HebrewDateFormatter {
 	 * 
 	 * @param transliteratedHolidays
 	 *            the transliteratedHolidays to set. Ensure that the sequence exactly matches the list returned by the
-	 *            defaulyt
+	 *            default
 	 */
 	public void setTransliteratedHolidayList(String[] transliteratedHolidays) {
 		this.transliteratedHolidays = transliteratedHolidays;
@@ -302,7 +305,7 @@ public class HebrewDateFormatter {
 	 */
 	private static final String[] hebrewMonths = { "\u05E0\u05D9\u05E1\u05DF", "\u05D0\u05D9\u05D9\u05E8",
 			"\u05E1\u05D9\u05D5\u05DF", "\u05EA\u05DE\u05D5\u05D6", "\u05D0\u05D1", "\u05D0\u05DC\u05D5\u05DC",
-			"\u05EA\u05E9\u05E8\u05D9", "\u05D7\u05E9\u05D5\u05D5\u05DF", "\u05DB\u05E1\u05DC\u05D5",
+			"\u05EA\u05E9\u05E8\u05D9", "\u05D7\u05E9\u05D5\u05DF", "\u05DB\u05E1\u05DC\u05D5",
 			"\u05D8\u05D1\u05EA", "\u05E9\u05D1\u05D8", "\u05D0\u05D3\u05E8", "\u05D0\u05D3\u05E8 \u05D1",
 			"\u05D0\u05D3\u05E8 \u05D0" };
 
@@ -349,9 +352,9 @@ public class HebrewDateFormatter {
 
 	/**
 	 * Returns whether the class is set to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and
-	 * numbers. When true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;.
+	 * numbers. When true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x5DB;
+	 * (or &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x5DA;). When set to false, this output
+	 * would display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DB;.
 	 * 
 	 * @return true if set to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and numbers.
 	 */
@@ -361,9 +364,11 @@ public class HebrewDateFormatter {
 
 	/**
 	 * Sets whether to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and numbers. The default
-	 * value is true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;.
+	 * value is true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x5DB;
+	 * (or &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5F4;&#x5DA;). When set to false, this output would
+	 * display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DB; (or
+	 * &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DA;). Single digit days or month or years such as &#x05DB;&#x05F3;
+	 * &#x05E9;&#x05D1;&#x05D8; &#x05D5;&#x05F3; &#x05D0;&#x05DC;&#x05E4;&#x05D9;&#x05DD; show the use of the Geresh.
 	 * 
 	 * @param useGershGershayim
 	 *            set to false to omit the Geresh &#x5F3; and Gershayim &#x5F4; in formatting
@@ -373,12 +378,38 @@ public class HebrewDateFormatter {
 	}
 
 	/**
+	 * Returns whether the class is set to use the &#x05DE;&#x05E0;&#x05E6;&#x05E4;&#x05F4;&#x05DA; letters when
+	 * formatting years ending in 20, 40, 50, 80 and 90 to produce &#x05EA;&#x05E9;&#x05F4;&#x05E4; if false or
+	 * or &#x05EA;&#x05E9;&#x05F4;&#x05E3; if true. Traditionally non-final form letters are used, so the year
+	 * 5780 would be formatted as &#x05EA;&#x05E9;&#x05F4;&#x05E4; if the default false is used here. If this returns
+	 * true, the format &#x05EA;&#x05E9;&#x05F4;&#x05E3; would be used.
+	 * 
+	 * @return true if set to use final form letters when formatting Hebrew years. The default value is false.
+	 */
+	public boolean isUseFinalFormLetters() {
+		return useFinalFormLetters;
+	}
+
+	/**
+	 * When formatting a Hebrew Year, traditionally years ending in 20, 40, 50, 80 and 90 are formatted using non-final
+	 * form letters for example &#x05EA;&#x05E9;&#x05F4;&#x05E4; for the year 5780. Setting this to true (the default
+	 * is false) will use the final form letters for &#x05DE;&#x05E0;&#x05E6;&#x05E4;&#x05F4;&#x05DA; and will format
+	 * the year 5780 as &#x05EA;&#x05E9;&#x05F4;&#x05E3;.
+	 * 
+	 * @param useFinalFormLetters
+	 *            Set this to true to use final form letters when formatting Hebrew years.
+	 */
+	public void setUseFinalFormLetters(boolean useFinalFormLetters) {
+		this.useFinalFormLetters = useFinalFormLetters;
+	}
+
+	/**
 	 * Returns whether the class is set to use the thousands digit when formatting. When formatting a Hebrew Year,
 	 * traditionally the thousands digit is omitted and output for a year such as 5729 (1969 Gregorian) would be
 	 * calculated for 729 and format as &#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8;. When set to true the long format year such
 	 * as &#x5D4;&#x5F3; &#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8; for 5729/1969 is returned.
 	 * 
-	 * @return true if set to use the the thousands digit when formatting Hebrew dates and numbers.
+	 * @return true if set to use the thousands digit when formatting Hebrew dates and numbers.
 	 */
 	public boolean isUseLongHebrewYears() {
 		return useLonghebrewYears;
@@ -396,7 +427,6 @@ public class HebrewDateFormatter {
 	public void setUseLongHebrewYears(boolean useLongHebrewYears) {
 		this.useLonghebrewYears = useLongHebrewYears;
 	}
-
 	/**
 	 * Formats the Jewish date. If the formatter is set to Hebrew, it will format in the form, "day Month year" for
 	 * example &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8; &#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8;, and the format
@@ -481,7 +511,7 @@ public class HebrewDateFormatter {
 
 	/**
 	 * Formats a molad.
-	 * TODO: Experimental and incomplete
+	 * @todo Experimental and incomplete.
 	 * 
 	 * @param moladChalakim the chalakim of the molad
 	 * @return the formatted molad. FIXME: define proper format in English and Hebrew.
@@ -628,7 +658,11 @@ public class HebrewDateFormatter {
 			int tens = number / 10;
 			if (number % 10 == 0) { // if evenly divisable by 10
 				if (singleDigitNumber == false) {
-					sb.append(jTenEnds[tens]); // end letters so years like 5750 will end with an end nun
+					if(isUseFinalFormLetters()) {
+						sb.append(jTenEnds[tens]); // years like 5780 will end with a final form &#x05E3;
+					} else {
+						sb.append(jTens[tens]); // years like 5780 will end with a regular &#x05E4;
+					}
 				} else {
 					sb.append(jTens[tens]); // standard letters so years like 5050 will end with a regular nun
 				}

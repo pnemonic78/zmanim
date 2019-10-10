@@ -1,6 +1,6 @@
 /*
  * Zmanim Java API
- * Copyright (C) 2004-2018 Eliyahu Hershfeld
+ * Copyright (C) 2004-2019 Eliyahu Hershfeld
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
  * Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option)
@@ -63,7 +63,7 @@ import net.sourceforge.zmanim.util.ZmanimFormatter;
  * </pre>
  *
  *
- * @author &copy; Eliyahu Hershfeld 2004 - 2018
+ * @author &copy; Eliyahu Hershfeld 2004 - 2019
  */
 public class AstronomicalCalendar implements Cloneable {
 
@@ -370,10 +370,13 @@ public class AstronomicalCalendar implements Cloneable {
 
 	/**
 	 * A constructor that takes in <a href="http://en.wikipedia.org/wiki/Geolocation">geolocation</a> information as a
-	 * parameter.
+	 * parameter. The default {@link AstronomicalCalculator#getDefault() AstronomicalCalculator} used for solar
+	 * calculations is the the {@link net.sourceforge.zmanim.util.NOAACalculator}.
 	 *
 	 * @param geoLocation
 	 *            The location information used for calculating astronomical sun times.
+	 *
+	 * @see #setAstronomicalCalculator(AstronomicalCalculator) for changing the calculator class.
 	 */
 	public AstronomicalCalendar(GeoLocation geoLocation) {
 		setCalendar(Calendar.getInstance(geoLocation.getTimeZone()));
@@ -490,7 +493,7 @@ public class AstronomicalCalendar implements Cloneable {
 
 	/**
 	 * A method that returns sundial or solar noon. It occurs when the Sun is <a href
-	 * ="http://en.wikipedia.org/wiki/Transit_%28astronomy%29">transitting</a> the <a
+	 * ="http://en.wikipedia.org/wiki/Transit_%28astronomy%29">transiting</a> the <a
 	 * href="http://en.wikipedia.org/wiki/Meridian_%28astronomy%29">celestial meridian</a>. In this class it is
 	 * calculated as halfway between sea level sunrise and sea level sunset, which can be slightly off the real transit
 	 * time due to changes in declination (the lengthening or shortening day).
@@ -507,7 +510,7 @@ public class AstronomicalCalendar implements Cloneable {
 
 	/**
 	 * A method that returns sundial or solar noon. It occurs when the Sun is <a href
-	 * ="http://en.wikipedia.org/wiki/Transit_%28astronomy%29">transitting</a> the <a
+	 * ="http://en.wikipedia.org/wiki/Transit_%28astronomy%29">transiting</a> the <a
 	 * href="http://en.wikipedia.org/wiki/Meridian_%28astronomy%29">celestial meridian</a>. In this class it is
 	 * calculated as halfway between the sunrise and sunset passed to this method. This time can be slightly off the
 	 * real transit time due to changes in declination (the lengthening or shortening day).

@@ -98,7 +98,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
  * <prestyle="background: #FEF0C9; display: inline-block;">
  * long shaahZmanis = czc.getTemporalHour(czc.getSunriseOffsetByDegrees({@link AstronomicalCalendar#GEOMETRIC_ZENITH} + 12),
  * 						czc.getSunsetOffsetByDegrees({@link AstronomicalCalendar#GEOMETRIC_ZENITH} + ZENITH_7_POINT_083));
- * Date sofZamnAchila = getTimeOffset(czc.getSunriseOffsetByDegrees({@link AstronomicalCalendar#GEOMETRIC_ZENITH} + 12), 
+ * Date sofZmanAchila = getTimeOffset(czc.getSunriseOffsetByDegrees({@link AstronomicalCalendar#GEOMETRIC_ZENITH} + 12),
  * 					shaahZmanis * 9);</pre>
  * <p>
  * Calculating this <em>sof zman achila</em> according to the <em><a href="https://en.wikipedia.org/wiki/Vilna_Gaon">GRA</a></em>
@@ -1100,7 +1100,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * "http://www.hebrewbooks.org/pdfpager.aspx?req=20287&amp;pgnum=29">Divrei Chachamim No. 24</a> brought down by the <a href=
 	 * "http://www.hebrewbooks.org/pdfpager.aspx?req=50535&amp;pgnum=87">Birur Halacha, Tinyana, Ch. 18</a>. This calculates to
 	 * 9.5&deg;. Also see <a href="https://en.wikipedia.org/wiki/Jacob_Isaac_Neiman">Rabbi Yaakov Yitzchok Neiman</a> in Kovetz
-	 * Eitz Chaim Vol. 9, p. 202 that the the Vyaan Yosef did not want to rely on times earlier than 45 minutes in New York. This
+	 * Eitz Chaim Vol. 9, p. 202 that the Vyaan Yosef did not want to rely on times earlier than 45 minutes in New York. This
 	 * <em>zman</em> is also used in the calendars published by Rabbi Hershel Edelstein. As mentioned in the <em>Yisroel
 	 * Vehazmanim</em>,  Rabbi Edelstein who was given the 45 minute zman by Rabbi Bick. The calendars published by the
 	 * <em><a href="https://en.wikipedia.org/wiki/Mizrahi_Jews">Edot Hamizrach</a></em> communities also use this zman. This also
@@ -2169,7 +2169,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	/**
 	 * This method returns the <em>tzais</em> (nightfall) based on the opinion of the <em>Geonim</em> calculated as 3/4
 	 * of a 24 minute
-	  <em><a href= "http://en.wikipedia.org/wiki/Biblical_and_Talmudic_units_of_measurement" >Mil</a></em>, 
+	  <em><a href= "http://en.wikipedia.org/wiki/Biblical_and_Talmudic_units_of_measurement" >Mil</a></em>,
 	 *  based on a <em>Mil</em> being 24 minutes, and is calculated as 18 + 2 + 4 for a total of
 	  24 minutes . It is the* sun's position at
 	  {@link #ZENITH_5_POINT_88 5.88&deg;} below the western horizon. This is a very early* <em>zman</em> and should not
@@ -2770,7 +2770,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH));
 
-		// Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in French
+		// Do not calculate for impossible dates, but account for extreme cases. In the extreme case of Rapa Iti in French
 		// Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush Levana
 		// will be on the 12th of the Teves. In the case of Anadyr, Russia on Jan, 2071, sof zman Kiddush Levana between the
 		// moldos will occur is on the night of 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
@@ -2869,7 +2869,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 		JewishCalendar jewishCalendar = new JewishCalendar();
 		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH));
-		// Do not calculate for impossible dates, but account for extreme cases. In the the extreme case of Rapa Iti in
+		// Do not calculate for impossible dates, but account for extreme cases. In the extreme case of Rapa Iti in
 		// French Polynesia on Dec 2027 when kiddush Levana 3 days can be said on <em>Rosh Chodesh</em>, the sof zman Kiddush
 		// Levana will be on the 12th of the Teves. in the case of Anadyr, Russia on Jan, 2071, sof zman kiddush levana will
 		// occur after midnight on the 17th of Shevat. See Rabbi Dovid Heber's Shaarei Zmanim chapter 4 (pages 28 and 32).
@@ -2971,7 +2971,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	}
 	
 	/**
-	 * Returns the the point in time of <em>Molad</em> as a <code>Date</code> Object. For the traditional day of week, hour,
+	 * Returns the point in time of <em>Molad</em> as a <code>Date</code> Object. For the traditional day of week, hour,
 	 * minute and chalakim, {@link JewishCalendar#getMoladAsDate()} and the not yet completed
 	 * {@link net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter} that will have formatting for this.
 	 * 
@@ -3281,7 +3281,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * 
 	 * @return the <code>Date</code> representing the exact sea-level <em>shkiah amiti</em> (sunset) time. If the calculation
 	 *         can't be computed such as in the Arctic Circle where there is at least one day a year where the sun does not
-	 *         rise, and one where it does not set, a null will be returned. See detailed explanation on top of the the
+	 *         rise, and one where it does not set, a null will be returned. See detailed explanation on top of the
 	 *         {@link AstronomicalCalendar} documentation.
 	 * 
 	 * @see #getSunset()
@@ -3428,12 +3428,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
 	public Long getMinchaGedolaBaalHatanyaGreaterThan30() {
-		Long minchag30 = getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5);
-		Long minchagz = getMinchaGedolaBaalHatanya();
-		if (minchag30 == null || minchagz == null) {
+		Long minchag30 = getMinchaGedola30Minutes();
+		Long minchagbh = getMinchaGedolaBaalHatanya();
+		if (minchag30 == null || minchagbh == null) {
 			return null;
 		} else {
-			return minchag30.compareTo(minchagz) > 0 ? minchag30 : minchagz;
+			return minchag30.compareTo(minchagbh) > 0 ? minchag30 : minchagbh;
 		}
 	}
 
