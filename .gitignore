@@ -32,6 +32,7 @@ local.properties
 .idea/vcs.xml
 .idea/workspace.xml
 .idea/libraries
+.idea/caches
 .DS_Store
 build/
 captures/
