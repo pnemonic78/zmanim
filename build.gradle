@@ -39,9 +39,3 @@ dependencies {
     // Testing
     testImplementation 'junit:junit:4.13'
 }
-
-ext {
-    androidBuildSdkVersion = 29
-    androidBuildMinSdkVersion = 16
-    androidBuildTargetSdkVersion = 29
-}
