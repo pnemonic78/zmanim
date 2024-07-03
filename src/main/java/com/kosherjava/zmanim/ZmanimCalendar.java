@@ -69,7 +69,19 @@ import com.kosherjava.zmanim.util.GeoLocation;
  * @author &copy; Eliyahu Hershfeld 2004 - 2025
  */
 public class ZmanimCalendar extends AstronomicalCalendar {
-	
+
+	/**
+	 * A type that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Date, Date) temporal hour}) according to
+	 * the opinion of the <em>GRA</em> and the <em>Baal Hatanya</em>.
+	 */
+	public static final int SHAAH_ZMANIS_GRA = 0;
+	/**
+	 * A type that returns a <em>shaah zmanis</em> (temporal hour) according to the opinion of the Magen Avraham.
+	 */
+	public static final int SHAAH_ZMANIS_MGA = 1;
+
+	protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
+
 	/**
 	 * Is elevation factored in for some <em>zmanim</em> (see {@link #isUseElevation()} for additional information).
 	 * @see #isUseElevation()
@@ -268,7 +280,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Date getElevationAdjustedSunrise() {
 		if (isUseElevation()) {
-			return super.getSunrise();
+			return getSunrise();
 		}
 		return getSeaLevelSunrise();
 	}
@@ -284,7 +296,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Date getElevationAdjustedSunset() {
 		if (isUseElevation()) {
-			return super.getSunset();
+			return getSunset();
 		}
 		return getSeaLevelSunset();
 	}
@@ -1230,5 +1242,29 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 			return Long.MIN_VALUE;
 		}
 		return (endOfHalfDay.getTime() - startOfHalfDay.getTime()) / 6;
+	}
+
+	/**
+	 * A method that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Date, Date) temporal hour}).
+	 *
+	 * @return the <code>long</code> millisecond length of a <em>shaah zmanis</em>.
+	 * @see #getShaahZmanisGra()
+	 */
+	public long getShaahZmanis() {
+		switch (shaahZmanisType) {
+			case MGA:
+				return getShaahZmanisMGA();
+			case GRA:
+			default:
+				return getShaahZmanisGra();
+		}
+	}
+
+	/**
+	 * Set the type of <em>shaah zmanis</em>.
+	 * @param type the type.
+	 */
+	public void setShaahZmanisType(ShaahZmanis type) {
+		shaahZmanisType = type;
 	}
 }
