@@ -414,7 +414,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 */
 	private static int gregorianDateToAbsDate(int year, int month, int dayOfMonth) {
 		int absDate = dayOfMonth;
-		for (int m = month - 1; m > 0; m--) {
+		for (int m = month - 1; m > Calendar.JANUARY; m--) {
 			absDate += getLastDayOfGregorianMonth(m, year); // days in prior months of the year
 		}
 		return (absDate // days this year

@@ -80,18 +80,18 @@ public class UT_DaysInGregorianMonth {
 		JewishDate  hebrewDate
 	) {
 
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(1));
-		assertEquals(febIsLeap ? 29 : 28, hebrewDate.getLastDayOfGregorianMonth(2));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(3));
-		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(4));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(5));
-		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(6));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(7));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(8));
-		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(9));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(10));
-		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(11));
-		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(12));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_JANUARY));
+		assertEquals(febIsLeap ? 29 : 28, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_FEBRUARY));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_MARCH));
+		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_APRIL));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_MAY));
+		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_JUNE));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_JULY));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_AUGUST));
+		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_SEPTEMBER));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_OCTOBER));
+		assertEquals(30, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_NOVEMBER));
+		assertEquals(31, hebrewDate.getLastDayOfGregorianMonth(JewishDate.MONTH_DECEMBER));
 	}
 
 
