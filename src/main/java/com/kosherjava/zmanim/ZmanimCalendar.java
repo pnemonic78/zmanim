@@ -68,7 +68,19 @@ import com.kosherjava.zmanim.util.GeoLocation;
  * @author &copy; Eliyahu Hershfeld 2004 - 2026
  */
 public class ZmanimCalendar extends AstronomicalCalendar {
-	
+
+	/**
+	 * A type that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Date, Date) temporal hour}) according to
+	 * the opinion of the <em>GRA</em> and the <em>Baal Hatanya</em>.
+	 */
+	public static final int SHAAH_ZMANIS_GRA = 0;
+	/**
+	 * A type that returns a <em>shaah zmanis</em> (temporal hour) according to the opinion of the Magen Avraham.
+	 */
+	public static final int SHAAH_ZMANIS_MGA = 1;
+
+	protected ShaahZmanis shaahZmanisType = ShaahZmanis.GRA;
+
 	/**
 	 * Is elevation factored in for some <em>zmanim</em> (see {@link isUseElevation()} for additional information).
 	 * @see isUseElevation()
@@ -261,7 +273,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Instant getSunriseBasedOnElevationSetting() {
 		if (isUseElevation()) {
-			return super.getSunrise();
+			return getSunrise();
 		}
 		return getSeaLevelSunrise();
 	}
@@ -277,7 +289,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	protected Instant getSunsetBasedOnElevationSetting() {
 		if (isUseElevation()) {
-			return super.getSunset();
+			return getSunset();
 		}
 		return getSeaLevelSunset();
 	}
@@ -1204,7 +1216,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 * based <em>zmanim</em>.
 	 */
 	public Instant getZmanisBasedOffset(double hours) {
-		long shaahZmanis = getShaahZmanisGRA();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE || hours == 0) {
 			return null;
 		}
@@ -1545,5 +1557,29 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), useElevation, useAstronomicalChatzos,
 				useAstronomicalChatzosForOtherZmanim, Double.hashCode(candleLightingOffset));
+	}
+
+	/**
+	 * A method that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Instant, Instant)}  temporal hour}).
+	 *
+	 * @return the <code>long</code> millisecond length of a <em>shaah zmanis</em>.
+	 * @see #getShaahZmanisGRA()
+	 */
+	public long getShaahZmanis() {
+		switch (shaahZmanisType) {
+			case MGA:
+				return getShaahZmanis72Minutes();
+			case GRA:
+			default:
+				return getShaahZmanisGRA();
+		}
+	}
+
+	/**
+	 * Set the type of <em>shaah zmanis</em>.
+	 * @param type the type.
+	 */
+	public void setShaahZmanisType(ShaahZmanis type) {
+		shaahZmanisType = type;
 	}
 }

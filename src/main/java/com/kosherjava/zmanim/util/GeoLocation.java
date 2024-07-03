@@ -21,6 +21,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
+import java.util.TimeZone;
 
 /**
  * A class that contains location information such as latitude and longitude required for astronomical calculations. The
@@ -136,6 +137,10 @@ public class GeoLocation implements Cloneable {
 	 */
 	public GeoLocation(String name, double latitude, double longitude, ZoneId zoneId) {
 		this(name, latitude, longitude, 0, zoneId);
+	}
+
+	public GeoLocation(String name, double latitude, double longitude, TimeZone zone) {
+		this(name, latitude, longitude, 0, zone.toZoneId());
 	}
 
 	/**
