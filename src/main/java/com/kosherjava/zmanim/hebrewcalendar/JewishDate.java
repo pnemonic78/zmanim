@@ -341,7 +341,8 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 *            the month. As with other cases in this class, this is 1-based, not zero-based.
 	 * @return the number of days in the month in the given year
 	 */
-	private static int getLastDayOfGregorianMonth(int year, int month) {
+	// @VisibleForTesting
+	protected static int getLastDayOfGregorianMonth(int year, int month) {
 		switch (month) {
 		case 2:
 			if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
@@ -420,7 +421,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 * @return true if it is a leap year
 	 * @see #isJewishLeapYear()
 	 */
-	private static boolean isJewishLeapYear(int year) {
+	public static boolean isJewishLeapYear(int year) {
 		return ((7 * year) + 1) % 19 < 7;
 	}
 
