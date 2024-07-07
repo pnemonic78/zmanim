@@ -4,6 +4,8 @@
 
 package com.kosherjava.zmanim.hebrewcalendar;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.*;
 
 import java.util.Calendar;
@@ -20,9 +22,9 @@ public class UT_JewishDateNavigation {
 
 		JewishDate jewishDate = new JewishDate();
 		jewishDate.setJewishDate(5771, 1, 1);
-		Assert.assertEquals(5, jewishDate.getGregorianDayOfMonth());
-		Assert.assertEquals(3, jewishDate.getGregorianMonth());
-		Assert.assertEquals(2011, jewishDate.getGregorianYear());
+		assertEquals(5, jewishDate.getGregorianDayOfMonth());
+		assertEquals(3, jewishDate.getGregorianMonth());
+		assertEquals(2011, jewishDate.getGregorianYear());
 	}
 
 
@@ -33,9 +35,9 @@ public class UT_JewishDateNavigation {
 
 		JewishDate jewishDate = new JewishDate();
 		jewishDate.setJewishDate(5771, 7, 1);
-		Assert.assertEquals(9, jewishDate.getGregorianDayOfMonth());
-		Assert.assertEquals(8, jewishDate.getGregorianMonth());
-		Assert.assertEquals(2010, jewishDate.getGregorianYear());
+		assertEquals(9, jewishDate.getGregorianDayOfMonth());
+		assertEquals(8, jewishDate.getGregorianMonth());
+		assertEquals(2010, jewishDate.getGregorianYear());
 	}
 
 
