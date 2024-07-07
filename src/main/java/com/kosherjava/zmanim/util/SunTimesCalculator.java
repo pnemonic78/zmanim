@@ -61,12 +61,14 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 */
 	private static final double DEG_PER_HOUR = 360.0 / 24.0;
 
+	private static final double PI_2 = Math.PI * 2.0;
+
 	/**
 	 * @param deg the degrees
 	 * @return sin of the angle in degrees
 	 */
 	private static double sinDeg(double deg) {
-		return Math.sin(deg * 2.0 * Math.PI / 360.0);
+		return Math.sin(deg * PI_2 / 360.0);
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * @return acos of the angle in degrees
 	 */
 	private static double acosDeg(double x) {
-		return Math.acos(x) * 360.0 / (2 * Math.PI);
+		return Math.acos(x) * 360.0 / PI_2;
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * @return asin of the angle in degrees
 	 */
 	private static double asinDeg(double x) {
-		return Math.asin(x) * 360.0 / (2 * Math.PI);
+		return Math.asin(x) * 360.0 / PI_2;
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * @return tan of the angle in degrees
 	 */
 	private static double tanDeg(double deg) {
-		return Math.tan(deg * 2.0 * Math.PI / 360.0);
+		return Math.tan(deg * PI_2 / 360.0);
 	}
 	
 	/**
@@ -100,7 +102,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 * @return cosine of the angle in degrees
 	 */
 	private static double cosDeg(double deg) {
-		return Math.cos(deg * 2.0 * Math.PI / 360.0);
+		return Math.cos(deg * PI_2 / 360.0);
 	}
 
 	/**
@@ -168,7 +170,7 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 */
 	private static double getSunRightAscensionHours(double sunTrueLongitude) {
 		double a = 0.91764 * tanDeg(sunTrueLongitude);
-		double ra = 360.0 / (2.0 * Math.PI) * Math.atan(a);
+		double ra = 360.0 / PI_2 * Math.atan(a);
 
 		double lQuadrant = Math.floor(sunTrueLongitude / 90.0) * 90.0;
 		double raQuadrant = Math.floor(ra / 90.0) * 90.0;
@@ -224,22 +226,22 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	 */
 	private static double getTimeUTC(Calendar calendar, GeoLocation geoLocation, double zenith, boolean isSunrise) {
 		int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-		double sunMeanAnomaly = getMeanAnomaly(dayOfYear, geoLocation.getLongitude(), isSunrise);
+		double latitude = geoLocation.getLatitude();
+		double longitude = geoLocation.getLongitude();
+
+		double hourAngle = getHourAngle(dayOfYear, latitude, longitude, zenith, isSunrise);
+		if (Double.isNaN(hourAngle)) {
+			hourAngle = interpolateHourAngle(dayOfYear, geoLocation, zenith, isSunrise);
+			if (Double.isNaN(hourAngle)) return Double.NaN;
+		}
+		double localHour = hourAngle / DEG_PER_HOUR;
+
+		double sunMeanAnomaly = getMeanAnomaly(dayOfYear, longitude, isSunrise);
 		double sunTrueLong = getSunTrueLongitude(sunMeanAnomaly);
 		double sunRightAscensionHours = getSunRightAscensionHours(sunTrueLong);
-		double cosLocalHourAngle = getCosLocalHourAngle(sunTrueLong, geoLocation.getLatitude(), zenith);
-
-		double localHourAngle;
-		if (isSunrise) {
-			localHourAngle = 360.0 - acosDeg(cosLocalHourAngle);
-		} else { // sunset
-			localHourAngle = acosDeg(cosLocalHourAngle);
-		}
-		double localHour = localHourAngle / DEG_PER_HOUR;
-
 		double localMeanTime = getLocalMeanTime(localHour, sunRightAscensionHours,
-				getApproxTimeDays(dayOfYear, getHoursFromMeridian(geoLocation.getLongitude()), isSunrise));
-		double processedTime = localMeanTime - getHoursFromMeridian(geoLocation.getLongitude());
+				getApproxTimeDays(dayOfYear, getHoursFromMeridian(longitude), isSunrise));
+		double processedTime = localMeanTime - getHoursFromMeridian(longitude);
 		while (processedTime < 0.0) {
 			processedTime += 24.0;
 		}
@@ -275,7 +277,72 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 		}
 		if (noon < sunrise) {
 			noon -= 12;
-		} 
+		}
 		return noon;
+	}
+
+	private static double getHourAngle(int dayOfYear, double latitude, double longitude, double zenith, boolean isSunrise) {
+		double sunMeanAnomaly = getMeanAnomaly(dayOfYear, longitude, isSunrise);
+		double sunTrueLong = getSunTrueLongitude(sunMeanAnomaly);
+		double cosLocalHourAngle = getCosLocalHourAngle(sunTrueLong, latitude, zenith);
+		return isSunrise ? (360.0 - acosDeg(cosLocalHourAngle)) : acosDeg(cosLocalHourAngle);
+	}
+
+	/**
+	 * Use linear interpolation to calculate a missing angle.
+	 */
+	private static double interpolateHourAngle(int dayOfYear, GeoLocation geoLocation, double zenith, boolean isSunrise) {
+		double latitude = geoLocation.getLatitude();
+		double longitude = geoLocation.getLongitude();
+		double hourAngle;
+		double x1 = 0;
+		double y1 = 0;
+		double x2 = 0;
+		double y2 = 0;
+		boolean isLastDayOfYear = (dayOfYear >= 365);
+
+		int d = dayOfYear - 1;
+		while (d >= 1) {
+			hourAngle = getHourAngle(d, latitude, longitude, zenith, isSunrise);
+			if (!Double.isNaN(hourAngle)) {
+				if (isLastDayOfYear && (x2 == 0)) {
+					x2 = d;
+					y2 = hourAngle;
+					d--;
+					continue;
+				}
+				x1 = d;
+				y1 = hourAngle;
+				break;
+			}
+			d--;
+		}
+
+		d = dayOfYear + 1;
+		while (d <= 366) {
+			hourAngle = getHourAngle(d, latitude, longitude, zenith, isSunrise);
+			if (!Double.isNaN(hourAngle)) {
+				if (x1 == 0) {
+					x1 = d;
+					y1 = hourAngle;
+					d++;
+					continue;
+				}
+				x2 = d;
+				y2 = hourAngle;
+				break;
+			}
+			d++;
+		}
+
+		if ((x1 == 0) || (x2 == 0)) {
+			return Double.NaN;
+		}
+		double dx = x2 - x1;
+		if (dx == 0) {
+			return Double.NaN;
+		}
+		double dy = y2 - y1;
+		return y1 + ((dayOfYear - x1) * dy / dx);
 	}
 }
