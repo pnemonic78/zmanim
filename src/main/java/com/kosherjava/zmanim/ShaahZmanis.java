@@ -9,8 +9,6 @@ public enum ShaahZmanis {
 
     /** According to the opinion of the <em>GRA</em> and the <em>Baal Hatanya</em>. */
     GRA,
-    /** According to the opinion of the Magen Avraham. */
-    MGA,
     /** According to the opinion of the Yeshivat Ateret Torah. */
     ATERET,
     /** According to the opinion of the Baal Hatanya. */

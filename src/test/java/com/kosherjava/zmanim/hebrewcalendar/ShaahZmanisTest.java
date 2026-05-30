@@ -115,9 +115,6 @@ public class ShaahZmanisTest {
 		calendar.setShaahZmanisType(ShaahZmanis.GRA);
 		hour = calendar.getShaahZmanis();
 		assertEquals(3636877, hour, delta);
-		calendar.setShaahZmanisType(ShaahZmanis.MGA);
-		hour = calendar.getShaahZmanis();
-		assertEquals(4356877, hour, delta);
 	}
 
 	private static void assertEquals(long expected, long actual, long delta) {

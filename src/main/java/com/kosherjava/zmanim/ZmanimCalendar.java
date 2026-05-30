@@ -1567,7 +1567,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	public long getShaahZmanis() {
 		switch (shaahZmanisType) {
-			case MGA:
+			case MINUTES_72:
 				return getShaahZmanis72Minutes();
 			case GRA:
 			default:
